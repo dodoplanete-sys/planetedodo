@@ -1,0 +1,1490 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Planète Dodo</title>
+<meta name="description" content="Journal de sommeil, tétées, couches et conseils pour les familles suivies par Planète Dodo.">
+<meta name="theme-color" content="#1B2340">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+  /* ---------- Fonts ---------- */
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Karla:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+  :root{
+    --ink:#1B2340; --ink-soft:#4B4F72; --parchment:#FBF6EC; --parchment-dim:#F3ECDD;
+    --card:#FFFFFF; --line:#E4DAC4;
+    --moon:#C98A2E; --moon-glow:#F3D9A4;
+    --lavender:#6B6FB0; --lavender-soft:#E7E7F5;
+    --sage:#5C7A63; --sage-soft:#E4EDE3;
+    --terracotta:#C15E36; --terracotta-soft:#F6E1D2;
+    --teal:#3E7D77; --teal-soft:#E1EDEB;
+    --danger:#B5473A;
+    --shadow: 0 1px 2px rgba(27,35,64,.06), 0 8px 24px -12px rgba(27,35,64,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#F1ECDD; --ink-soft:#B9BEDD; --parchment:#11142A; --parchment-dim:#171B36;
+      --card:#1C2043; --line:#33375C;
+      --moon:#F3D9A4; --moon-glow:#5A4A26;
+      --lavender:#A9ACE6; --lavender-soft:#282C58;
+      --sage:#9BC0A3; --sage-soft:#20302A;
+      --terracotta:#E79A73; --terracotta-soft:#3A2620;
+      --teal:#8FC9C1; --teal-soft:#1A2E2C;
+      --danger:#E28A7D;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#F1ECDD; --ink-soft:#B9BEDD; --parchment:#11142A; --parchment-dim:#171B36;
+    --card:#1C2043; --line:#33375C;
+    --moon:#F3D9A4; --moon-glow:#5A4A26;
+    --lavender:#A9ACE6; --lavender-soft:#282C58;
+    --sage:#9BC0A3; --sage-soft:#20302A;
+    --terracotta:#E79A73; --terracotta-soft:#3A2620;
+    --teal:#8FC9C1; --teal-soft:#1A2E2C;
+    --danger:#E28A7D;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 12px 28px -14px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box;}
+  body{ margin:0; background:var(--parchment); color:var(--ink); font-family:'Karla', system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,.brand-word{ font-family:'Fraunces', Georgia, serif; text-wrap:balance; margin:0; }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; font-variant-numeric:tabular-nums; }
+  a{ color:inherit; } button{ font-family:inherit; }
+  .wrap{ max-width:960px; margin:0 auto; padding:0 20px; }
+  [hidden]{ display:none !important; }
+
+  /* ---------- Header ---------- */
+  header.top{
+    position:relative; overflow:hidden;
+    background:
+      radial-gradient(1.5px 1.5px at 12% 30%, var(--ink-soft) 60%, transparent 61%),
+      radial-gradient(1.5px 1.5px at 24% 70%, var(--ink-soft) 60%, transparent 61%),
+      radial-gradient(1px 1px at 38% 20%, var(--ink-soft) 60%, transparent 61%),
+      radial-gradient(1.5px 1.5px at 55% 55%, var(--ink-soft) 60%, transparent 61%),
+      radial-gradient(1px 1px at 68% 15%, var(--ink-soft) 60%, transparent 61%),
+      radial-gradient(1.5px 1.5px at 82% 40%, var(--ink-soft) 60%, transparent 61%),
+      radial-gradient(1px 1px at 91% 68%, var(--ink-soft) 60%, transparent 61%),
+      linear-gradient(180deg, var(--parchment-dim), var(--parchment));
+    border-bottom:1px solid var(--line); opacity:0.97;
+  }
+  header.top .inner{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:18px 20px 14px; flex-wrap:wrap; }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .brand-word{ font-size:1.4rem; font-weight:600; letter-spacing:.2px; }
+  .brand-word em{ color:var(--moon); font-style:italic; }
+  .tagline{ font-size:.82rem; color:var(--ink-soft); margin-top:2px; }
+  .head-right{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+
+  .lang-switch{ display:flex; gap:4px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:3px; box-shadow:var(--shadow); }
+  .lang-switch button{ border:none; background:transparent; color:var(--ink-soft); font-size:.76rem; font-weight:700; padding:6px 9px; border-radius:999px; cursor:pointer; letter-spacing:.03em; }
+  .lang-switch button.active{ background:var(--ink); color:var(--parchment); }
+
+  .account-chip{ display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line); border-radius:999px; padding:5px 6px 5px 12px; font-size:.76rem; color:var(--ink-soft); box-shadow:var(--shadow); }
+  .account-chip button{ border:none; background:var(--parchment-dim); color:var(--ink); border-radius:999px; padding:5px 10px; font-weight:700; font-size:.74rem; cursor:pointer; }
+
+  .status-banner{ font-size:.78rem; padding:9px 20px; text-align:center; border-bottom:1px solid var(--line); }
+  .status-banner.local{ background:var(--moon-glow); color:var(--ink); }
+  .status-banner.cloud{ background:var(--sage-soft); color:var(--sage); }
+
+  .moonphase{ display:flex; align-items:center; gap:10px; padding:0 20px 16px; color:var(--ink-soft); font-size:.8rem; }
+  .moon-disc{ position:relative; width:24px; height:24px; border-radius:50%; background:var(--moon-glow); flex:none; overflow:hidden; box-shadow:inset 0 0 0 1px var(--line); }
+  .moon-disc .shadow{ position:absolute; top:0; bottom:0; background:var(--ink); opacity:.82; }
+
+  /* ---------- Tabs ---------- */
+  nav.tabs{ position:sticky; top:0; z-index:5; background:var(--parchment); border-bottom:1px solid var(--line); }
+  nav.tabs .inner{ display:flex; gap:6px; overflow-x:auto; padding:10px 20px; }
+  nav.tabs button{ flex:none; border:1px solid var(--line); background:var(--card); color:var(--ink-soft); font-weight:700; font-size:.8rem; padding:9px 13px; border-radius:999px; cursor:pointer; display:flex; align-items:center; gap:7px; white-space:nowrap; }
+  nav.tabs button svg{ width:15px; height:15px; }
+  nav.tabs button.active{ background:var(--ink); color:var(--parchment); border-color:var(--ink); }
+
+  main{ padding:26px 0 60px; }
+  section.panel{ display:none; }
+  section.panel.active{ display:block; animation:rise .3s ease both; }
+  @media (prefers-reduced-motion: reduce){ section.panel.active{ animation:none; } }
+  @keyframes rise{ from{ opacity:0; transform:translateY(6px);} to{opacity:1; transform:none;} }
+
+  .section-head{ margin-bottom:16px; display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap; }
+  .section-head h2{ font-size:1.4rem; font-weight:600; }
+  .section-head p{ color:var(--ink-soft); font-size:.9rem; max-width:60ch; line-height:1.5; margin-top:5px; }
+
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow); }
+  .pad{ padding:18px; }
+
+  .stat-row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:16px; }
+  .stat-tile{ padding:15px; }
+  .stat-tile .num{ font-size:1.5rem; font-weight:500; }
+  .stat-tile .lbl{ font-size:.74rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; margin-top:2px; }
+  .stat-tile.accent-lavender{ border-left:3px solid var(--lavender); }
+  .stat-tile.accent-sage{ border-left:3px solid var(--sage); }
+  .stat-tile.accent-gold{ border-left:3px solid var(--moon); }
+  .stat-tile.accent-teal{ border-left:3px solid var(--teal); }
+
+  .bio-card{ display:flex; gap:16px; align-items:flex-start; }
+  .bio-card .avatar{ width:48px; height:48px; border-radius:50%; flex:none; background:linear-gradient(160deg, var(--moon-glow), var(--moon)); }
+  .bio-card p{ line-height:1.6; font-size:.92rem; color:var(--ink-soft); margin:6px 0 0; }
+  .bio-card .credentials{ margin-top:10px; font-size:.76rem; color:var(--ink-soft); border-top:1px dashed var(--line); padding-top:9px; }
+
+  .quicklinks{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-top:16px; }
+  .quicklink{ padding:15px; cursor:pointer; text-align:left; border:1px solid var(--line); background:var(--card); border-radius:16px; }
+  .quicklink svg{ width:19px; height:19px; margin-bottom:7px; }
+  .quicklink b{ display:block; font-size:.9rem; } .quicklink span{ font-size:.76rem; color:var(--ink-soft); }
+  .quicklink.c-lavender svg{ color:var(--lavender); } .quicklink.c-sage svg{ color:var(--sage); }
+  .quicklink.c-terracotta svg{ color:var(--terracotta); } .quicklink.c-gold svg{ color:var(--moon); } .quicklink.c-teal svg{ color:var(--teal); }
+
+  label{ font-size:.74rem; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; display:block; margin-bottom:5px; }
+  input, textarea, select{ width:100%; font-size:.9rem; padding:9px 10px; border-radius:9px; border:1px solid var(--line); background:var(--parchment-dim); color:var(--ink); font-family:inherit; }
+  input:focus, textarea:focus, select:focus{ outline:2px solid var(--lavender); outline-offset:1px; }
+
+  .btn{ border:none; border-radius:999px; padding:10px 17px; font-weight:700; font-size:.83rem; cursor:pointer; display:inline-flex; align-items:center; gap:8px; }
+  .btn:focus-visible{ outline:2px solid var(--ink); outline-offset:2px; }
+  .btn:disabled{ opacity:.5; cursor:not-allowed; }
+  .btn-primary{ background:var(--ink); color:var(--parchment); }
+  .btn-lavender{ background:var(--lavender); color:#fff; }
+  .btn-sage{ background:var(--sage); color:#fff; }
+  .btn-terracotta{ background:var(--terracotta); color:#fff; }
+  .btn-teal{ background:var(--teal); color:#fff; }
+  .btn-danger{ background:var(--danger); color:#fff; }
+  .btn-ghost{ background:transparent; border:1px solid var(--line); color:var(--ink); }
+  .btn svg{ width:15px; height:15px; }
+  .btn-block{ width:100%; justify-content:center; }
+
+  /* ---------- Child switcher ---------- */
+  .child-bar{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:18px; }
+  .child-pills{ display:flex; gap:6px; flex-wrap:wrap; }
+  .child-pill{ border:1px solid var(--line); background:var(--card); color:var(--ink-soft); border-radius:999px; padding:7px 13px; font-size:.8rem; font-weight:700; cursor:pointer; }
+  .child-pill.active{ background:var(--ink); color:var(--parchment); border-color:var(--ink); }
+  .child-add-btn{ border:1px dashed var(--line); background:transparent; color:var(--ink-soft); border-radius:999px; padding:7px 13px; font-size:.8rem; font-weight:700; cursor:pointer; }
+
+  /* ---------- Journal / timer ---------- */
+  .journal-grid{ display:grid; grid-template-columns:1.05fr 1fr; gap:18px; align-items:start; }
+  @media (max-width:780px){ .journal-grid{ grid-template-columns:1fr; } }
+  .timer-card{ text-align:center; padding:22px 18px; }
+  .orbit-wrap{ max-width:270px; margin:0 auto; }
+  .orbit-wrap svg{ display:block; width:100%; height:auto; }
+  .orbit-caption{ font-size:.78rem; color:var(--ink-soft); margin:8px 0 18px; line-height:1.5; }
+  .orbit-caption b{ font-family:'IBM Plex Mono', monospace; color:var(--ink); }
+  @keyframes orbitPulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
+  .orbit-now-dot{ animation:orbitPulse 2.4s ease-in-out infinite; transform-origin:center; transform-box:fill-box; }
+  @media (prefers-reduced-motion: reduce){ .orbit-now-dot{ animation:none; } }
+  .timer-buttons{ display:flex; gap:10px; margin-bottom:14px; }
+  .timer-buttons .btn{ flex:1; }
+  .timer-live{ background:var(--lavender-soft); border-radius:14px; padding:16px; margin-top:6px; }
+  .timer-live .elapsed{ font-size:1.9rem; font-weight:600; }
+  .timer-live .sub{ font-size:.78rem; color:var(--ink-soft); margin-top:2px; }
+  .divider-or{ display:flex; align-items:center; gap:10px; color:var(--ink-soft); font-size:.74rem; margin:16px 0; text-transform:uppercase; letter-spacing:.06em; }
+  .divider-or::before, .divider-or::after{ content:""; flex:1; height:1px; background:var(--line); }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .type-toggle{ display:flex; gap:8px; margin-bottom:12px; }
+  .type-toggle button{ flex:1; border:1px solid var(--line); background:var(--parchment-dim); color:var(--ink-soft); border-radius:9px; padding:9px; font-weight:700; font-size:.8rem; cursor:pointer; }
+  .type-toggle button.active{ background:var(--lavender); color:#fff; border-color:var(--lavender); }
+
+  .suggestion{ background:var(--moon-glow); border-radius:14px; padding:14px 16px; margin-top:14px; font-size:.85rem; color:var(--ink); }
+  .suggestion b{ font-family:'IBM Plex Mono', monospace; }
+
+  .chart-wrap{ margin-top:14px; }
+  .log-list{ list-style:none; margin:0; padding:0; margin-top:12px; display:flex; flex-direction:column; gap:8px; max-height:300px; overflow-y:auto; }
+  .log-item{ display:flex; align-items:center; gap:10px; padding:10px 12px; border:1px solid var(--line); border-radius:10px; background:var(--parchment-dim); }
+  .log-item .dot{ width:8px; height:8px; border-radius:50%; flex:none; }
+  .log-item .dot.night{ background:var(--lavender); } .log-item .dot.nap{ background:var(--moon); }
+  .log-item .dot.breast_l, .log-item .dot.breast_r, .log-item .dot.bottle, .log-item .dot.solid{ background:var(--teal); }
+  .log-item .dot.wet{ background:var(--teal); } .log-item .dot.dirty{ background:var(--terracotta); } .log-item .dot.mixed{ background:var(--danger); }
+  .log-item .meta{ flex:1; min-width:0; } .log-item .meta .top{ font-size:.84rem; font-weight:700; }
+  .log-item .meta .sub{ font-size:.75rem; color:var(--ink-soft); }
+  .log-item .dur{ font-size:.88rem; font-weight:700; }
+  .log-item .del{ background:none; border:none; color:var(--ink-soft); cursor:pointer; font-size:1rem; line-height:1; padding:4px; }
+  .empty{ color:var(--ink-soft); font-size:.85rem; padding:14px 0; }
+
+  /* ---------- Feeding / diaper quick add ---------- */
+  .quick-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:8px; }
+  .quick-btn{ border:1px solid var(--line); background:var(--parchment-dim); border-radius:12px; padding:12px 8px; text-align:center; cursor:pointer; font-size:.8rem; font-weight:700; color:var(--ink); }
+  .quick-btn svg{ width:18px; height:18px; display:block; margin:0 auto 6px; color:var(--teal); }
+  .quick-btn.diaper svg{ color:var(--terracotta); }
+
+  /* ---------- Age pills / tips ---------- */
+  .age-pills{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+  .age-pills button{ border:1px solid var(--line); background:var(--card); color:var(--ink-soft); border-radius:999px; padding:8px 14px; font-size:.8rem; font-weight:700; cursor:pointer; }
+  .age-pills button.active.sage{ background:var(--sage); color:#fff; border-color:var(--sage); }
+  .age-pills button.active.terracotta{ background:var(--terracotta); color:#fff; border-color:var(--terracotta); }
+  .age-pills button .tag{ font-size:.68rem; opacity:.75; margin-left:4px; }
+  .tip-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:10px; }
+  .tip-list li{ display:flex; gap:12px; padding:14px 16px; border-radius:12px; align-items:flex-start; font-size:.9rem; line-height:1.5; }
+  .tip-list li svg{ width:18px; height:18px; flex:none; margin-top:2px; }
+  .panel-signals .tip-list li{ background:var(--sage-soft); } .panel-signals .tip-list li svg{ color:var(--sage); }
+  .panel-nutrition .tip-list li{ background:var(--terracotta-soft); } .panel-nutrition .tip-list li svg{ color:var(--terracotta); }
+  .disclaimer{ font-size:.75rem; color:var(--ink-soft); margin-top:14px; font-style:italic; }
+
+  /* ---------- Questions ---------- */
+  .send-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  .q-list{ list-style:none; margin:16px 0 0; padding:0; display:flex; flex-direction:column; gap:10px; }
+  .q-item{ padding:12px 14px; border:1px solid var(--line); border-radius:10px; background:var(--parchment-dim); }
+  .q-item .qtext{ font-size:.88rem; }
+  .q-item .qmeta{ display:flex; justify-content:space-between; align-items:center; margin-top:6px; font-size:.71rem; color:var(--ink-soft); }
+  .pill-sent{ background:var(--sage-soft); color:var(--sage); border-radius:999px; padding:2px 9px; font-weight:700; }
+
+  /* ---------- Family / account panel ---------- */
+  .invite-box{ display:flex; align-items:center; gap:10px; background:var(--parchment-dim); border-radius:12px; padding:12px 14px; margin-top:10px; }
+  .invite-box .code{ font-size:1.1rem; font-weight:700; letter-spacing:.08em; }
+  .member-note{ font-size:.78rem; color:var(--ink-soft); margin-top:8px; }
+
+  /* ---------- Auth screen ---------- */
+  .auth-wrap{ min-height:100vh; display:flex; align-items:center; justify-content:center; padding:30px 20px; }
+  .auth-card{ width:100%; max-width:400px; padding:26px; }
+  .auth-tabs{ display:flex; gap:6px; margin-bottom:18px; }
+  .auth-tabs button{ flex:1; border:1px solid var(--line); background:var(--parchment-dim); color:var(--ink-soft); border-radius:9px; padding:9px; font-weight:700; font-size:.78rem; cursor:pointer; }
+  .auth-tabs button.active{ background:var(--ink); color:var(--parchment); border-color:var(--ink); }
+  .auth-field{ margin-bottom:12px; }
+  .auth-error{ background:var(--terracotta-soft); color:var(--terracotta); font-size:.8rem; padding:9px 12px; border-radius:9px; margin-bottom:12px; }
+  .auth-hint{ font-size:.76rem; color:var(--ink-soft); margin-top:10px; text-align:center; }
+
+  footer{ border-top:1px solid var(--line); padding:20px 0 36px; color:var(--ink-soft); font-size:.75rem; text-align:center; line-height:1.7; }
+  footer strong{ color:var(--ink); }
+  ::-webkit-scrollbar{ height:8px; width:8px; } ::-webkit-scrollbar-thumb{ background:var(--line); border-radius:8px; }
+</style>
+</head>
+<body>
+
+<!-- ============== AUTH SCREEN (shown only when Firebase is configured) ============== -->
+<div class="auth-wrap" id="authScreen" hidden>
+  <div class="card auth-card">
+    <div class="brand" style="margin-bottom:18px;">
+      <svg width="30" height="30" viewBox="0 0 34 34" fill="none" style="color:var(--moon)"><path d="M22 6a11 11 0 1 0 6 19.8A9 9 0 0 1 22 6Z" fill="currentColor"/></svg>
+      <div><div class="brand-word">Plan<em>è</em>te Dodo</div></div>
+    </div>
+    <div class="auth-tabs">
+      <button data-authtab="login" class="active" data-i18n="auth_login"></button>
+      <button data-authtab="signup" data-i18n="auth_signup"></button>
+      <button data-authtab="join" data-i18n="auth_join"></button>
+    </div>
+    <div class="auth-error" id="authError" hidden></div>
+
+    <form id="formLogin">
+      <div class="auth-field"><label data-i18n="auth_email"></label><input type="email" id="loginEmail" required autocomplete="email"></div>
+      <div class="auth-field"><label data-i18n="auth_password"></label><input type="password" id="loginPassword" required autocomplete="current-password"></div>
+      <button type="submit" class="btn btn-primary btn-block" data-i18n="auth_login_btn"></button>
+    </form>
+
+    <form id="formSignup" hidden>
+      <div class="auth-field"><label data-i18n="auth_familyname"></label><input type="text" id="signupFamily" required></div>
+      <div class="auth-field"><label data-i18n="auth_email"></label><input type="email" id="signupEmail" required autocomplete="email"></div>
+      <div class="auth-field"><label data-i18n="auth_password"></label><input type="password" id="signupPassword" required minlength="6" autocomplete="new-password"></div>
+      <button type="submit" class="btn btn-primary btn-block" data-i18n="auth_signup_btn"></button>
+    </form>
+
+    <form id="formJoin" hidden>
+      <div class="auth-field"><label data-i18n="auth_invitecode"></label><input type="text" id="joinCode" required style="text-transform:uppercase;"></div>
+      <div class="auth-field"><label data-i18n="auth_email"></label><input type="email" id="joinEmail" required autocomplete="email"></div>
+      <div class="auth-field"><label data-i18n="auth_password"></label><input type="password" id="joinPassword" required minlength="6" autocomplete="new-password"></div>
+      <button type="submit" class="btn btn-primary btn-block" data-i18n="auth_join_btn"></button>
+    </form>
+  </div>
+</div>
+
+<!-- ============== MAIN APP ============== -->
+<div id="appRoot">
+<header class="top">
+  <div class="inner wrap">
+    <div class="brand">
+      <svg width="32" height="32" viewBox="0 0 34 34" fill="none" style="color:var(--moon)">
+        <path d="M22 6a11 11 0 1 0 6 19.8A9 9 0 0 1 22 6Z" fill="currentColor"/>
+        <circle cx="27" cy="9" r="1.3" fill="currentColor"/><circle cx="8" cy="24" r="1" fill="currentColor"/><circle cx="6" cy="14" r="0.8" fill="currentColor"/>
+      </svg>
+      <div>
+        <div class="brand-word">Plan<em>è</em>te Dodo</div>
+        <div class="tagline" data-i18n="tagline"></div>
+      </div>
+    </div>
+    <div class="head-right">
+      <div class="account-chip" id="accountChip" hidden>
+        <span id="accountEmail"></span>
+        <button id="btnLogout" data-i18n="auth_logout"></button>
+      </div>
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button data-lang="es">ES</button><button data-lang="fr">FR</button><button data-lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+  <div class="moonphase wrap">
+    <div class="moon-disc" id="moonDisc"><div class="shadow" id="moonShadow"></div></div>
+    <span id="moonLabel"></span>
+  </div>
+</header>
+
+<div class="status-banner local" id="statusBanner"></div>
+
+<nav class="tabs">
+  <div class="inner wrap">
+    <button data-tab="home" class="active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9h12v-9"/></svg>
+      <span data-i18n="tab_home"></span>
+    </button>
+    <button data-tab="journal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3.5 2"/></svg>
+      <span data-i18n="tab_journal"></span>
+    </button>
+    <button data-tab="feeding">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3v9a4 4 0 0 0 8 0V3M10 3v6"/><path d="M18 3v18"/></svg>
+      <span data-i18n="tab_feeding"></span>
+    </button>
+    <button data-tab="signals">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="7.5"/><path d="M12 8v4l3 2"/></svg>
+      <span data-i18n="tab_signals"></span>
+    </button>
+    <button data-tab="nutrition">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v7M8 3v4a2 2 0 0 0 4 0M16 3c-1.4 0-2.5 1.7-2.5 4s1.1 4 2.5 4v10"/></svg>
+      <span data-i18n="tab_nutrition"></span>
+    </button>
+    <button data-tab="questions">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H9l-4 4V5Z"/></svg>
+      <span data-i18n="tab_questions"></span>
+    </button>
+    <button data-tab="family">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="9" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3 20c0-3 2.5-5 5-5s5 2 5 5M14 20c0-2.4 1.8-4 4-4s4 1.6 4 4"/></svg>
+      <span data-i18n="tab_family"></span>
+    </button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- HOME -->
+  <section class="panel active panel-home" data-panel="home">
+    <div class="section-head"><h2><span id="greetName"></span></h2></div>
+
+    <div class="stat-row">
+      <div class="card stat-tile accent-lavender"><div class="num mono" id="statLastNight">–</div><div class="lbl" data-i18n="stat_lastnight"></div></div>
+      <div class="card stat-tile accent-gold"><div class="num mono" id="statNapsToday">0</div><div class="lbl" data-i18n="stat_napstoday"></div></div>
+      <div class="card stat-tile accent-teal"><div class="num mono" id="statFeedsToday">0</div><div class="lbl" data-i18n="stat_feedstoday"></div></div>
+      <div class="card stat-tile accent-sage"><div class="num mono" id="statQuestions">0</div><div class="lbl" data-i18n="stat_questions"></div></div>
+    </div>
+
+    <div class="card bio-card pad">
+      <div class="avatar"></div>
+      <div>
+        <h3 data-i18n="bio_title" style="font-size:1.02rem;font-weight:600;"></h3>
+        <p data-i18n="bio_text"></p>
+        <div class="credentials" data-i18n="bio_credentials"></div>
+      </div>
+    </div>
+
+    <div class="quicklinks">
+      <button class="quicklink c-lavender" data-goto="journal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3.5 2"/></svg><b data-i18n="tab_journal"></b><span data-i18n="qlink_journal"></span></button>
+      <button class="quicklink c-teal" data-goto="feeding"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3v9a4 4 0 0 0 8 0V3M10 3v6"/><path d="M18 3v18"/></svg><b data-i18n="tab_feeding"></b><span data-i18n="qlink_feeding"></span></button>
+      <button class="quicklink c-sage" data-goto="signals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="7.5"/><path d="M12 8v4l3 2"/></svg><b data-i18n="tab_signals"></b><span data-i18n="qlink_signals"></span></button>
+      <button class="quicklink c-terracotta" data-goto="nutrition"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v7M8 3v4a2 2 0 0 0 4 0M16 3c-1.4 0-2.5 1.7-2.5 4s1.1 4 2.5 4v10"/></svg><b data-i18n="tab_nutrition"></b><span data-i18n="qlink_nutrition"></span></button>
+      <button class="quicklink c-gold" data-goto="questions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v11H9l-4 4V5Z"/></svg><b data-i18n="tab_questions"></b><span data-i18n="qlink_questions"></span></button>
+    </div>
+  </section>
+
+  <!-- JOURNAL -->
+  <section class="panel panel-journal" data-panel="journal">
+    <div class="section-head"><h2 data-i18n="tab_journal"></h2><p data-i18n="journal_intro"></p></div>
+    <div class="child-bar"><div class="child-pills" id="childPillsJournal"></div></div>
+    <div class="journal-grid">
+      <div class="card timer-card pad">
+        <div class="orbit-wrap">
+          <svg id="orbitSvg" viewBox="0 0 300 300" role="img" aria-label="Ciclo del día"></svg>
+        </div>
+        <p class="orbit-caption" id="orbitCaption"></p>
+
+        <div class="timer-buttons">
+          <button class="btn btn-lavender btn-block" id="btnStartNight" data-i18n="timer_start_night"></button>
+          <button class="btn btn-ghost btn-block" id="btnStartNap" data-i18n="timer_start_nap"></button>
+        </div>
+        <div class="timer-live" id="timerLive" hidden>
+          <div class="elapsed mono" id="timerElapsed">00:00</div>
+          <div class="sub" id="timerSub"></div>
+          <button class="btn btn-danger" id="btnStopTimer" style="margin-top:12px;" data-i18n="timer_stop"></button>
+        </div>
+
+        <div class="divider-or" data-i18n="manual_entry_divider"></div>
+        <div style="text-align:left;">
+          <div class="type-toggle">
+            <button type="button" class="active" data-type="night" data-i18n="type_night"></button>
+            <button type="button" data-type="nap" data-i18n="type_nap"></button>
+          </div>
+          <div class="form-row">
+            <div><label data-i18n="f_date"></label><input type="date" id="logDate"></div>
+            <div></div>
+            <div><label data-i18n="f_start"></label><input type="time" id="logStart"></div>
+            <div><label data-i18n="f_end"></label><input type="time" id="logEnd"></div>
+          </div>
+          <div style="margin-top:10px;"><label data-i18n="f_note"></label><input type="text" id="logNote"></div>
+          <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn btn-lavender" id="logSave"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg><span data-i18n="log_save"></span></button>
+            <button class="btn btn-ghost" id="shareWeekly" data-i18n="share_weekly"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <h3 style="font-size:.83rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);" data-i18n="chart_title"></h3>
+        <div class="chart-wrap"><svg id="chartSvg" viewBox="0 0 280 130" width="100%" height="130"></svg></div>
+        <h3 style="font-size:.83rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin-top:14px;" data-i18n="history_title"></h3>
+        <ul class="log-list" id="sleepLogList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEEDING & DIAPER -->
+  <section class="panel panel-feeding" data-panel="feeding">
+    <div class="section-head"><h2 data-i18n="tab_feeding"></h2><p data-i18n="feeding_intro"></p></div>
+    <div class="child-bar"><div class="child-pills" id="childPillsFeeding"></div></div>
+    <div class="journal-grid">
+      <div class="card pad">
+        <h3 style="font-size:.83rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin-bottom:10px;" data-i18n="feed_section_title"></h3>
+        <div class="quick-grid" id="feedQuickGrid"></div>
+        <ul class="log-list" id="feedLogList" style="margin-top:14px;"></ul>
+      </div>
+      <div class="card pad">
+        <h3 style="font-size:.83rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin-bottom:10px;" data-i18n="diaper_section_title"></h3>
+        <div class="quick-grid" id="diaperQuickGrid"></div>
+        <ul class="log-list" id="diaperLogList" style="margin-top:14px;"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIGNALS -->
+  <section class="panel panel-signals" data-panel="signals">
+    <div class="section-head"><h2 data-i18n="tab_signals"></h2><p data-i18n="signals_intro"></p></div>
+    <div class="age-pills" id="signalsAgePills"></div>
+    <ul class="tip-list" id="signalsList"></ul>
+  </section>
+
+  <!-- NUTRITION -->
+  <section class="panel panel-nutrition" data-panel="nutrition">
+    <div class="section-head"><h2 data-i18n="tab_nutrition"></h2><p data-i18n="nutrition_intro"></p></div>
+    <div class="age-pills" id="nutritionAgePills"></div>
+    <ul class="tip-list" id="nutritionList"></ul>
+    <p class="disclaimer" data-i18n="nutrition_disclaimer"></p>
+  </section>
+
+  <!-- QUESTIONS -->
+  <section class="panel panel-questions" data-panel="questions">
+    <div class="section-head"><h2 data-i18n="tab_questions"></h2><p data-i18n="questions_intro"></p></div>
+    <div class="card pad">
+      <label data-i18n="q_label"></label>
+      <textarea id="qText" rows="3" data-i18n-ph="q_placeholder"></textarea>
+      <div class="send-row">
+        <button class="btn btn-sage" id="sendWhats"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1.6-4.8A8 8 0 1 1 9 18.9L4 20Z"/></svg><span data-i18n="send_whatsapp"></span></button>
+        <button class="btn btn-ghost" id="sendMail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4z"/><path d="m4 6 8 7 8-7"/></svg><span data-i18n="send_email"></span></button>
+      </div>
+    </div>
+    <h3 style="font-size:.83rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin:18px 0 4px;" data-i18n="q_history"></h3>
+    <ul class="q-list" id="qList"></ul>
+  </section>
+
+  <!-- FAMILY -->
+  <section class="panel panel-family" data-panel="family">
+    <div class="section-head"><h2 data-i18n="tab_family"></h2><p data-i18n="family_intro"></p></div>
+
+    <div class="card pad" style="margin-bottom:16px;">
+      <h3 style="font-size:.95rem;font-weight:700;margin-bottom:10px;" data-i18n="children_title"></h3>
+      <div id="childrenManageList" style="display:flex;flex-direction:column;gap:8px;"></div>
+      <div class="form-row" style="margin-top:14px;grid-template-columns:2fr 1fr;">
+        <div><label data-i18n="child_name_label"></label><input type="text" id="newChildName" data-i18n-ph="child_add_placeholder"></div>
+        <div><label data-i18n="profile_birth"></label><input type="date" id="newChildBirth"></div>
+      </div>
+      <button class="btn btn-primary" id="btnAddChild" style="margin-top:12px;" data-i18n="child_add"></button>
+    </div>
+
+    <div class="card pad" id="cloudFamilyBox" hidden>
+      <h3 style="font-size:.95rem;font-weight:700;" data-i18n="auth_family_code_label"></h3>
+      <div class="invite-box">
+        <span class="code mono" id="inviteCodeDisplay">------</span>
+        <button class="btn btn-ghost" id="btnCopyCode" data-i18n="auth_copy_code"></button>
+      </div>
+      <p class="member-note" data-i18n="invite_note"></p>
+    </div>
+
+    <div class="card pad" id="localFamilyBox">
+      <h3 style="font-size:.95rem;font-weight:700;margin-bottom:8px;" data-i18n="profile_title"></h3>
+      <div class="form-row">
+        <div><label data-i18n="profile_parent"></label><input type="text" id="pfParent"></div>
+      </div>
+      <button class="btn btn-primary" id="pfSave" style="margin-top:12px;" data-i18n="profile_save"></button>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div data-i18n="footer_credentials"></div>
+    <div style="margin-top:6px;">Planète Dodo · <strong>Luisa Suarez</strong></div>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   FIREBASE CONFIG — replace with your own project's config to enable
+   real cross-device sync. Until you do, the app runs fully in
+   "local mode" (data saved only in this browser). See GUIA-CONFIGURACION.md.
+   The Firebase SDK itself is loaded lazily below (dynamic import), so a
+   blocked or missing network never breaks the app — it just stays local.
+   ===================================================================== */
+const firebaseConfig = {
+  apiKey: "AIzaSyAISP8sosp0Ug5_kxnLP_BBgD2b3RajN4M",
+  authDomain: "planete-dodo.firebaseapp.com",
+  projectId: "planete-dodo",
+  storageBucket: "planete-dodo.firebasestorage.app",
+  messagingSenderId: "216020055201",
+  appId: "1:216020055201:web:98b1a452c2f56630a4ace0"
+};
+/* ===================================================================== */
+
+/* ======= Contact info — edit with your real WhatsApp/email ======= */
+const CONTACT = {
+  whatsapp: "00000000000", // country code + number, digits only, e.g. 15551234567
+  email: "tu-email-aqui@ejemplo.com"
+};
+/* =================================================================== */
+
+var CLOUD_ENABLED = !!(firebaseConfig.apiKey && firebaseConfig.apiKey.indexOf("YOUR_") !== 0);
+var fbApp, auth, dbFs;
+var initializeApp, getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+    signOut, setPersistence, browserLocalPersistence;
+var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection, query,
+    orderBy, limit, onSnapshot, arrayUnion, serverTimestamp;
+
+(function(){
+  "use strict";
+
+  var LS = { lang:"pd_lang", profile:"pd_profile", children:"pd_children", currentChild:"pd_current_child",
+             logs:"pd_logs_", questions:"pd_questions", timer:"pd_timer_" };
+
+  function loadLS(key, fallback){ try{ var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }catch(e){ return fallback; } }
+  function saveLS(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
+  function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+  function escapeHtml(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+
+  /* ---------------- i18n ---------------- */
+  var T = {
+    es:{
+      tagline:"Acompañamiento del sueño infantil, sin lágrimas",
+      tab_home:"Inicio", tab_journal:"Diario de sueño", tab_feeding:"Tomas y pañales", tab_signals:"Señales de sueño",
+      tab_nutrition:"Nutrición y sueño", tab_questions:"Preguntas", tab_family:"Familia",
+      greeting:"Hola", greeting_generic:"familia",
+      stat_lastnight:"Última noche", stat_napstoday:"Siestas hoy", stat_feedstoday:"Tomas hoy", stat_questions:"Preguntas enviadas",
+      bio_title:"Sobre Luisa",
+      bio_text:"Soy Luisa Suarez, pedagoga del sueño certificada por el Institut SOMNA. Acompaño a familias de 0 a 12 años con la somnopedagogía™, un método que mira el sueño desde ocho ángulos: neurociencia, apego, nutrición, regulación emocional, entorno, ritmos biológicos, dinámica familiar y medicina integrativa. Sin métodos de dejar llorar.",
+      bio_credentials:"Certificada por el Institut SOMNA · Reconocida por 13 asociaciones profesionales en 13 países",
+      qlink_journal:"Cronómetro y registro de sueño", qlink_feeding:"Tomas y pañales del día",
+      qlink_signals:"Señales según la edad", qlink_nutrition:"Consejos de alimentación pro-sueño", qlink_questions:"Escribile a Luisa tus dudas",
+      journal_intro:"Iniciá el cronómetro al dormir a tu hijo/a, o cargá el registro a mano. Vas a ver los patrones y podés compartirlos con Luisa.",
+      timer_start_night:"Iniciar sueño nocturno", timer_start_nap:"Iniciar siesta", timer_stop:"Detener y guardar",
+      timer_sub_night:"Sueño nocturno en curso desde las ", timer_sub_nap:"Siesta en curso desde las ",
+      manual_entry_divider:"o cargar a mano",
+      type_night:"Noche", type_nap:"Siesta",
+      f_date:"Fecha", f_start:"Hora de inicio", f_end:"Hora de fin", f_note:"Nota (opcional)",
+      log_save:"Guardar registro", share_weekly:"Compartir resumen semanal con Luisa",
+      chart_title:"Horas de sueño · últimos 7 días", history_title:"Historial reciente",
+      log_empty:"Todavía no hay registros. ¡Agregá el primero!",
+      suggestion_none:"Cargá un registro de sueño para ver una sugerencia de próxima siesta.",
+      suggestion_text:"Según la edad y la última siesta, la próxima ventana de sueño estimada es alrededor de las <b>{time}</b>. Es una orientación general, no reemplaza tu plan con Luisa.",
+      orbit_running:"{type} en curso", orbit_since:"desde las {time}",
+      orbit_next_label:"Próxima siesta en", orbit_towards:"hacia las {time}",
+      orbit_now_label:"Ahora", orbit_no_data:"Sin datos todavía — cargá un registro o iniciá el cronómetro",
+      orbit_overdue:"¡Ya es hora!",
+      feeding_intro:"Registrá tomas y pañales con un toque. Todo queda ordenado por hora en el historial.",
+      feed_section_title:"Tomas", diaper_section_title:"Pañales",
+      feed_breast_l:"Pecho izq.", feed_breast_r:"Pecho der.", feed_bottle:"Mamadera", feed_solid:"Sólido",
+      diaper_wet:"Mojado", diaper_dirty:"Sucio", diaper_mixed:"Mixto",
+      feed_empty:"Sin tomas registradas todavía.", diaper_empty:"Sin pañales registrados todavía.",
+      signals_intro:"Reconocer las señales de sueño a tiempo evita el exceso de cansancio, que hace más difícil dormirse. Elegí la edad para ver las señales típicas de esa etapa.",
+      nutrition_intro:"La alimentación influye en el sueño: horarios, tipo de alimentos e hidratación pueden favorecer o dificultar el descanso.",
+      nutrition_disclaimer:"Estos consejos son generales y educativos; no reemplazan una consulta con tu pediatra o nutricionista.",
+      questions_intro:"¿Tenés una duda? Escribila acá. Podés enviarla directamente por WhatsApp o email, y queda guardada en tu historial.",
+      q_label:"Tu pregunta", q_placeholder:"Escribí tu pregunta o duda...",
+      send_whatsapp:"Enviar por WhatsApp", send_email:"Enviar por email", q_history:"Tus preguntas",
+      q_empty:"Todavía no enviaste ninguna pregunta.", q_sent:"Enviada",
+      family_intro:"Gestioná los perfiles de tus hijos/as y, si activaste la sincronización, invitá a tu pareja o niñera.",
+      children_title:"Hijos/as", child_add:"Agregar hijo/a", child_name_label:"Nombre", child_add_placeholder:"Ej: Mía",
+      child_none:"Todavía no agregaste ningún hijo/a.",
+      profile_title:"Tu nombre", profile_parent:"Tu nombre", profile_save:"Guardar", profile_birth:"Fecha de nacimiento",
+      auth_family_code_label:"Código de tu familia", auth_copy_code:"Copiar",
+      invite_note:"Compartí este código con tu pareja o niñera: al crear su cuenta con la opción \"Unirme con código\", van a ver el mismo registro.",
+      footer_credentials:"Certificada por el Institut SOMNA · Reconocida por 13 asociaciones profesionales en 13 países",
+      moon_new:"Luna nueva", moon_wax_cres:"Creciente", moon_first:"Cuarto creciente", moon_wax_gib:"Gibosa creciente",
+      moon_full:"Luna llena", moon_wan_gib:"Gibosa menguante", moon_last:"Cuarto menguante", moon_wan_cres:"Menguante",
+      moon_label:"Fase lunar de hoy:", unit_h:"h",
+      auth_login:"Ingresar", auth_signup:"Crear cuenta", auth_join:"Unirme con código",
+      auth_email:"Email", auth_password:"Contraseña", auth_familyname:"Nombre de tu familia",
+      auth_invitecode:"Código de invitación", auth_login_btn:"Ingresar", auth_signup_btn:"Crear mi familia",
+      auth_join_btn:"Unirme a la familia", auth_logout:"Salir",
+      auth_error_generic:"Algo no funcionó. Revisá los datos e intentá de nuevo.",
+      status_local:"Modo local: tus datos se guardan solo en este dispositivo. Seguí la guía de configuración para sincronizar entre dispositivos.",
+      status_cloud:"Sincronizado en la nube · conectado como"
+    },
+    fr:{
+      tagline:"Accompagnement du sommeil de l'enfant, sans pleurs",
+      tab_home:"Accueil", tab_journal:"Journal de sommeil", tab_feeding:"Tétées et couches", tab_signals:"Signes de sommeil",
+      tab_nutrition:"Nutrition et sommeil", tab_questions:"Questions", tab_family:"Famille",
+      greeting:"Bonjour", greeting_generic:"famille",
+      stat_lastnight:"Dernière nuit", stat_napstoday:"Siestes aujourd'hui", stat_feedstoday:"Tétées aujourd'hui", stat_questions:"Questions envoyées",
+      bio_title:"À propos de Luisa",
+      bio_text:"Je suis Luisa Suarez, pédagogue du sommeil certifiée par l'Institut SOMNA. J'accompagne les familles de 0 à 12 ans avec la somnopédagogie™, une méthode qui envisage le sommeil sous huit angles : neurosciences, attachement, nutrition, régulation émotionnelle, environnement, rythmes biologiques, dynamique familiale et médecine intégrative. Sans méthode du laisser-pleurer.",
+      bio_credentials:"Certifiée par l'Institut SOMNA · Reconnue par 13 associations professionnelles dans 13 pays",
+      qlink_journal:"Chronomètre et journal de sommeil", qlink_feeding:"Tétées et couches du jour",
+      qlink_signals:"Signes selon l'âge", qlink_nutrition:"Conseils d'alimentation pro-sommeil", qlink_questions:"Écrivez vos questions à Luisa",
+      journal_intro:"Démarrez le chronomètre quand votre enfant s'endort, ou saisissez le journal à la main. Vous verrez les tendances et pourrez les partager avec Luisa.",
+      timer_start_night:"Démarrer le sommeil de nuit", timer_start_nap:"Démarrer la sieste", timer_stop:"Arrêter et enregistrer",
+      timer_sub_night:"Sommeil de nuit en cours depuis ", timer_sub_nap:"Sieste en cours depuis ",
+      manual_entry_divider:"ou saisir manuellement",
+      type_night:"Nuit", type_nap:"Sieste",
+      f_date:"Date", f_start:"Heure de début", f_end:"Heure de fin", f_note:"Note (facultatif)",
+      log_save:"Enregistrer", share_weekly:"Partager le résumé hebdo avec Luisa",
+      chart_title:"Heures de sommeil · 7 derniers jours", history_title:"Historique récent",
+      log_empty:"Aucun enregistrement pour l'instant. Ajoutez le premier !",
+      suggestion_none:"Ajoutez un enregistrement de sommeil pour voir une suggestion de prochaine sieste.",
+      suggestion_text:"Selon l'âge et la dernière sieste, la prochaine fenêtre de sommeil estimée est vers <b>{time}</b>. C'est une orientation générale, qui ne remplace pas votre plan avec Luisa.",
+      orbit_running:"{type} en cours", orbit_since:"depuis {time}",
+      orbit_next_label:"Prochaine sieste dans", orbit_towards:"vers {time}",
+      orbit_now_label:"Maintenant", orbit_no_data:"Pas encore de données — ajoutez un enregistrement ou démarrez le chronomètre",
+      orbit_overdue:"C'est l'heure !",
+      feeding_intro:"Enregistrez les tétées et les couches en un geste. Tout reste classé par heure dans l'historique.",
+      feed_section_title:"Tétées", diaper_section_title:"Couches",
+      feed_breast_l:"Sein gauche", feed_breast_r:"Sein droit", feed_bottle:"Biberon", feed_solid:"Solide",
+      diaper_wet:"Pipi", diaper_dirty:"Selle", diaper_mixed:"Mixte",
+      feed_empty:"Aucune tétée enregistrée pour l'instant.", diaper_empty:"Aucune couche enregistrée pour l'instant.",
+      signals_intro:"Reconnaître les signes de sommeil à temps évite le surmenage, qui complique l'endormissement. Choisissez l'âge pour voir les signes typiques de cette étape.",
+      nutrition_intro:"L'alimentation influence le sommeil : horaires, types d'aliments et hydratation peuvent favoriser ou compliquer le repos.",
+      nutrition_disclaimer:"Ces conseils sont généraux et éducatifs ; ils ne remplacent pas une consultation avec votre pédiatre ou nutritionniste.",
+      questions_intro:"Une question ? Écrivez-la ici. Vous pouvez l'envoyer directement par WhatsApp ou email, et elle reste dans votre historique.",
+      q_label:"Votre question", q_placeholder:"Écrivez votre question...",
+      send_whatsapp:"Envoyer par WhatsApp", send_email:"Envoyer par email", q_history:"Vos questions",
+      q_empty:"Vous n'avez pas encore envoyé de question.", q_sent:"Envoyée",
+      family_intro:"Gérez les profils de vos enfants et, si la synchronisation est activée, invitez votre partenaire ou la nounou.",
+      children_title:"Enfants", child_add:"Ajouter un enfant", child_name_label:"Prénom", child_add_placeholder:"Ex : Léo",
+      child_none:"Vous n'avez pas encore ajouté d'enfant.",
+      profile_title:"Votre nom", profile_parent:"Votre nom", profile_save:"Enregistrer", profile_birth:"Date de naissance",
+      auth_family_code_label:"Code de votre famille", auth_copy_code:"Copier",
+      invite_note:"Partagez ce code avec votre partenaire ou la nounou : en créant leur compte avec \"Unirme con código\", ils verront le même journal.",
+      footer_credentials:"Certifiée par l'Institut SOMNA · Reconnue par 13 associations professionnelles dans 13 pays",
+      moon_new:"Nouvelle lune", moon_wax_cres:"Croissante", moon_first:"Premier quartier", moon_wax_gib:"Gibbeuse croissante",
+      moon_full:"Pleine lune", moon_wan_gib:"Gibbeuse décroissante", moon_last:"Dernier quartier", moon_wan_cres:"Décroissante",
+      moon_label:"Phase lunaire du jour :", unit_h:"h",
+      auth_login:"Connexion", auth_signup:"Créer un compte", auth_join:"Rejoindre avec un code",
+      auth_email:"Email", auth_password:"Mot de passe", auth_familyname:"Nom de votre famille",
+      auth_invitecode:"Code d'invitation", auth_login_btn:"Se connecter", auth_signup_btn:"Créer ma famille",
+      auth_join_btn:"Rejoindre la famille", auth_logout:"Déconnexion",
+      auth_error_generic:"Une erreur est survenue. Vérifiez les informations et réessayez.",
+      status_local:"Mode local : vos données sont enregistrées uniquement sur cet appareil. Suivez le guide de configuration pour synchroniser.",
+      status_cloud:"Synchronisé dans le cloud · connecté en tant que"
+    },
+    en:{
+      tagline:"Gentle child sleep guidance, without tears",
+      tab_home:"Home", tab_journal:"Sleep Journal", tab_feeding:"Feeds & Diapers", tab_signals:"Sleep Signals",
+      tab_nutrition:"Nutrition & Sleep", tab_questions:"Ask Luisa", tab_family:"Family",
+      greeting:"Hello", greeting_generic:"there",
+      stat_lastnight:"Last night", stat_napstoday:"Naps today", stat_feedstoday:"Feeds today", stat_questions:"Questions sent",
+      bio_title:"About Luisa",
+      bio_text:"I'm Luisa Suarez, a certified sleep pedagogue (Institut SOMNA). I support families with children aged 0 to 12 using somnopedagogy™, an approach that looks at sleep through eight lenses: neuroscience, attachment, nutrition, emotional regulation, environment, biological rhythms, family dynamics, and integrative medicine. No cry-it-out methods.",
+      bio_credentials:"Certified by Institut SOMNA · Recognized by 13 professional associations in 13 countries",
+      qlink_journal:"Timer and sleep log", qlink_feeding:"Today's feeds and diapers",
+      qlink_signals:"Signals by age", qlink_nutrition:"Nutrition tips for better sleep", qlink_questions:"Write your questions to Luisa",
+      journal_intro:"Start the timer when your child falls asleep, or log it by hand. See the patterns and share them easily with Luisa.",
+      timer_start_night:"Start night sleep", timer_start_nap:"Start nap", timer_stop:"Stop and save",
+      timer_sub_night:"Night sleep running since ", timer_sub_nap:"Nap running since ",
+      manual_entry_divider:"or enter manually",
+      type_night:"Night", type_nap:"Nap",
+      f_date:"Date", f_start:"Start time", f_end:"End time", f_note:"Note (optional)",
+      log_save:"Save entry", share_weekly:"Share weekly summary with Luisa",
+      chart_title:"Sleep hours · last 7 days", history_title:"Recent history",
+      log_empty:"No entries yet. Add the first one!",
+      suggestion_none:"Log a sleep entry to see a next-nap suggestion.",
+      suggestion_text:"Based on age and the last nap, the next estimated sleep window is around <b>{time}</b>. This is a general guide, not a substitute for your plan with Luisa.",
+      orbit_running:"{type} running", orbit_since:"since {time}",
+      orbit_next_label:"Next nap in", orbit_towards:"around {time}",
+      orbit_now_label:"Now", orbit_no_data:"Not enough data yet — log an entry or start the timer",
+      orbit_overdue:"It's time!",
+      feeding_intro:"Log feeds and diaper changes with one tap. Everything stays ordered by time in the history.",
+      feed_section_title:"Feeds", diaper_section_title:"Diapers",
+      feed_breast_l:"Left breast", feed_breast_r:"Right breast", feed_bottle:"Bottle", feed_solid:"Solid",
+      diaper_wet:"Wet", diaper_dirty:"Dirty", diaper_mixed:"Mixed",
+      feed_empty:"No feeds logged yet.", diaper_empty:"No diapers logged yet.",
+      signals_intro:"Catching sleep signals early prevents the overtiredness that makes falling asleep harder. Pick an age to see the typical signals for that stage.",
+      nutrition_intro:"Nutrition affects sleep: timing, food choices, and hydration can help or hinder rest.",
+      nutrition_disclaimer:"These tips are general and educational — they don't replace a visit to your pediatrician or nutritionist.",
+      questions_intro:"Have a question? Write it here. You can send it directly via WhatsApp or email, and it stays in your history.",
+      q_label:"Your question", q_placeholder:"Write your question...",
+      send_whatsapp:"Send via WhatsApp", send_email:"Send via email", q_history:"Your questions",
+      q_empty:"You haven't sent any questions yet.", q_sent:"Sent",
+      family_intro:"Manage your children's profiles and, once sync is on, invite your partner or babysitter.",
+      children_title:"Children", child_add:"Add child", child_name_label:"Name", child_add_placeholder:"E.g. Mia",
+      child_none:"You haven't added any children yet.",
+      profile_title:"Your name", profile_parent:"Your name", profile_save:"Save", profile_birth:"Date of birth",
+      auth_family_code_label:"Your family code", auth_copy_code:"Copy",
+      invite_note:"Share this code with your partner or babysitter: when they create their account with \"Join with code\", they'll see the same log.",
+      footer_credentials:"Certified by Institut SOMNA · Recognized by 13 professional associations in 13 countries",
+      moon_new:"New moon", moon_wax_cres:"Waxing crescent", moon_first:"First quarter", moon_wax_gib:"Waxing gibbous",
+      moon_full:"Full moon", moon_wan_gib:"Waning gibbous", moon_last:"Last quarter", moon_wan_cres:"Waning crescent",
+      moon_label:"Today's moon phase:", unit_h:"h",
+      auth_login:"Log in", auth_signup:"Sign up", auth_join:"Join with code",
+      auth_email:"Email", auth_password:"Password", auth_familyname:"Your family's name",
+      auth_invitecode:"Invite code", auth_login_btn:"Log in", auth_signup_btn:"Create my family",
+      auth_join_btn:"Join the family", auth_logout:"Log out",
+      auth_error_generic:"Something didn't work. Check the details and try again.",
+      status_local:"Local mode: your data is saved only on this device. Follow the setup guide to sync across devices.",
+      status_cloud:"Synced in the cloud · signed in as"
+    }
+  };
+
+  var AGE_BANDS = ["b1","b2","b3","b4"];
+  var AGE_LABEL = { es:{b1:"Bebé", b2:"1–3 años", b3:"3–6 años", b4:"6–12 años"},
+                    fr:{b1:"Bébé", b2:"1–3 ans", b3:"3–6 ans", b4:"6–12 ans"},
+                    en:{b1:"Baby", b2:"1–3 yrs", b3:"3–6 yrs", b4:"6–12 yrs"} };
+  var AGE_TAG = { es:{b1:"0–12 m"}, fr:{b1:"0–12 m"}, en:{b1:"0–12 mo"} };
+
+  var SIGNALS = {
+    es:{ b1:["Se frota los ojos o tira de la oreja o el pelo","Mirada perdida, bosteza o desacelera la succión al comer","Se pone irritable y busca más upa o contacto que de costumbre"],
+         b2:["Se frota los ojos o bosteza repetidamente","Se vuelve torpe, tropieza más o pierde interés en el juego","Pide upa, se pone lloroso/a o busca su objeto de apego"],
+         b3:["Se frota los ojos, bosteza o se frota la cara","Se pone más torpe, hiperactivo/a o discutidor/a (contraintuitivo, pero frecuente)","Pierde la paciencia con juegos o pantallas que antes disfrutaba"],
+         b4:["Bosteza, se frota los ojos o se hunde en el sillón","Baja el rendimiento o la paciencia hacia el final del día","Pide quedarse despierto/a más tiempo, pero luego cuesta despertarlo/a"] },
+    fr:{ b1:["Se frotte les yeux ou tire sur l'oreille ou les cheveux","Regard absent, bâille ou tète plus lentement","Devient grognon et cherche plus de contact que d'habitude"],
+         b2:["Se frotte les yeux ou bâille à répétition","Devient maladroit, trébuche plus ou perd l'intérêt pour le jeu","Réclame les bras, pleure facilement ou cherche son doudou"],
+         b3:["Se frotte les yeux, bâille ou se frotte le visage","Devient plus maladroit, hyperactif ou contestataire (contre-intuitif mais fréquent)","Perd patience avec des jeux ou écrans qu'il appréciait plus tôt"],
+         b4:["Bâille, se frotte les yeux ou s'affale dans le canapé","Sa concentration ou sa patience baisse en fin de journée","Demande à veiller plus tard mais est ensuite difficile à réveiller"] },
+    en:{ b1:["Rubs eyes or pulls at an ear or hair","Stares blankly, yawns, or slows down while feeding","Gets fussy and seeks more contact than usual"],
+         b2:["Rubs eyes or yawns repeatedly","Becomes clumsy, trips more, or loses interest in play","Asks to be held, cries easily, or reaches for a comfort object"],
+         b3:["Rubs eyes, yawns, or rubs their face","Gets clumsier, hyper, or argumentative (counterintuitive but common)","Loses patience with games or screens they enjoyed earlier"],
+         b4:["Yawns, rubs their eyes, or slumps on the couch","Focus or patience drops later in the day","Asks to stay up later but is then hard to wake up"] }
+  };
+  var NUTRITION = {
+    es:{ b1:["Última toma completa y tranquila, sin prisas, antes de acostar","Evitá introducir alimentos nuevos justo antes de la siesta o la noche","Tomas de día bien espaciadas ayudan a marcar un ritmo hambre-sueño más claro"],
+         b2:["Merienda liviana ~1 hora antes de dormir (hidrato + proteína)","Evitar azúcar o jugos justo antes de acostarse","Ofrecer agua durante el día para llegar hidratado/a a la noche"],
+         b3:["Cena al menos 1–2 horas antes de acostarse, ni muy pesada ni con hambre","Cuidado con el azúcar y las bebidas con cafeína (chocolate, algunos tés) de tarde","Una rutina de cena tranquila ayuda a bajar la activación antes de dormir"],
+         b4:["Evitar bebidas con cafeína (cola, té, exceso de chocolate) después de media tarde","Snack liviano si hay hambre antes de dormir, evitando azúcar simple","Desalentar pantallas durante la cena para favorecer una comida más calma"] },
+    fr:{ b1:["Dernière tétée/biberon complet et calme, sans se presser, avant le coucher","Évitez d'introduire un nouvel aliment juste avant la sieste ou la nuit","Des prises bien espacées en journée aident à installer un rythme faim-sommeil plus clair"],
+         b2:["Goûter léger environ 1 heure avant le coucher (glucide + protéine)","Éviter le sucre ou les jus juste avant le coucher","Proposer de l'eau dans la journée pour arriver hydraté le soir"],
+         b3:["Dîner au moins 1 à 2 heures avant le coucher, ni trop lourd ni le ventre vide","Attention au sucre et aux boissons contenant de la caféine (chocolat, certains thés) l'après-midi","Un dîner calme aide à faire redescendre l'excitation avant le coucher"],
+         b4:["Éviter les boissons contenant de la caféine (cola, thé, excès de chocolat) après le milieu de l'après-midi","Une collation légère en cas de faim avant le coucher, en évitant les sucres simples","Décourager les écrans pendant le dîner pour un repas plus calme"] },
+    en:{ b1:["A full, unhurried last feed before bedtime","Avoid introducing new foods right before a nap or bedtime","Well-spaced daytime feeds help set a clearer hunger–sleep rhythm"],
+         b2:["A light snack ~1 hour before bed (a carb + a protein)","Avoid sugar or juice right before bedtime","Offer water through the day so they're hydrated by night"],
+         b3:["Dinner at least 1–2 hours before bed — not too heavy, not on an empty stomach","Watch sugar and caffeine-containing drinks (chocolate, some teas) in the afternoon","A calm dinner routine helps wind down before sleep"],
+         b4:["Avoid caffeine-containing drinks (cola, tea, too much chocolate) after mid-afternoon","A light snack if hungry before bed, avoiding simple sugars","Discourage screens during dinner for a calmer meal"] }
+  };
+
+  var FEED_TYPES = [
+    { kind:"breast_l", labelKey:"feed_breast_l", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l2.5 1.5"/></svg>' },
+    { kind:"breast_r", labelKey:"feed_breast_r", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l-2.5 1.5"/></svg>' },
+    { kind:"bottle", labelKey:"feed_bottle", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 3h4M10 3v3.5c-2 1-3 3-3 5.5v7a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-7c0-2.5-1-4.5-3-5.5V3"/></svg>' },
+    { kind:"solid", labelKey:"feed_solid", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 13a8 8 0 0 1 16 0Z"/><path d="M12 13V4"/></svg>' }
+  ];
+  var DIAPER_TYPES = [
+    { kind:"wet", labelKey:"diaper_wet", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11Z"/></svg>' },
+    { kind:"dirty", labelKey:"diaper_dirty", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M9 10c0-1.5 1.3-2.5 3-2.5s3 1 3 2.5-1.3 2-3 2-3 .5-3 2 1.3 2.5 3 2.5 3-1 3-2.5"/></svg>' },
+    { kind:"mixed", labelKey:"diaper_mixed", icon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11Z"/><path d="M9 13.5c.5.8 1.6 1 2.9 1"/></svg>' }
+  ];
+
+  /* ---------------- state ---------------- */
+  var state = {
+    lang: loadLS(LS.lang, null) || (navigator.language||"es").slice(0,2),
+    profile: loadLS(LS.profile, {}),
+    children: loadLS(LS.children, []),
+    currentChildId: loadLS(LS.currentChild, null),
+    logs: [],
+    questions: loadLS(LS.questions, []),
+    logType: "night",
+    signalsAge: "b1",
+    nutritionAge: "b1",
+    activeTimer: null,
+    cloud: { user:null, familyId:null, familyDoc:null, unsub:[] }
+  };
+  if(["es","fr","en"].indexOf(state.lang) === -1) state.lang = "es";
+  function t(key){ return (T[state.lang] && T[state.lang][key]) || (T.es[key] || key); }
+
+  function isCloud(){ return CLOUD_ENABLED && state.cloud.user && state.cloud.familyId; }
+
+  /* ---------------- local logs helpers ---------------- */
+  function localLogsKey(childId){ return LS.logs + childId; }
+  function loadChildLogs(childId){ return loadLS(localLogsKey(childId), []); }
+  function saveChildLogs(childId, arr){ saveLS(localLogsKey(childId), arr); }
+
+  function currentChild(){ return state.children.find(function(c){ return c.id === state.currentChildId; }) || state.children[0] || null; }
+
+  function bandFromBirth(birth){
+    if(!birth) return "b1";
+    var d = new Date(birth); if(isNaN(d)) return "b1";
+    var months = (Date.now() - d.getTime()) / (1000*60*60*24*30.437);
+    if(months < 12) return "b1"; if(months < 36) return "b2"; if(months < 72) return "b3"; return "b4";
+  }
+  function ageInMonths(birth){
+    if(!birth) return null;
+    var d = new Date(birth); if(isNaN(d)) return null;
+    return (Date.now() - d.getTime()) / (1000*60*60*24*30.437);
+  }
+
+  /* ================= CHILDREN ================= */
+  function addChild(name, birth){
+    if(!name.trim()) return;
+    if(isCloud()){
+      addDoc(collection(dbFs, "families", state.cloud.familyId, "children"), { name:name.trim(), birth: birth||null, createdAt: serverTimestamp() });
+    } else {
+      var c = { id: uid(), name: name.trim(), birth: birth || null };
+      state.children.push(c);
+      saveLS(LS.children, state.children);
+      if(!state.currentChildId){ state.currentChildId = c.id; saveLS(LS.currentChild, c.id); }
+      loadLocalChildLogsIntoState();
+      renderAll();
+    }
+  }
+  function selectChild(id){
+    state.currentChildId = id;
+    saveLS(LS.currentChild, id);
+    var c = currentChild();
+    if(c){ var b = bandFromBirth(c.birth); state.signalsAge = b; state.nutritionAge = b; }
+    if(isCloud()){ attachChildLogsListener(id); } else { loadLocalChildLogsIntoState(); }
+    renderAll();
+  }
+  function loadLocalChildLogsIntoState(){
+    var c = currentChild();
+    state.logs = c ? loadChildLogs(c.id) : [];
+  }
+
+  /* ================= LOGS (sleep / feed / diaper) ================= */
+  function addLog(entry){
+    var c = currentChild();
+    if(!c) return;
+    entry.category = entry.category || "sleep";
+    if(isCloud()){
+      addDoc(collection(dbFs, "families", state.cloud.familyId, "children", c.id, "logs"), Object.assign({}, entry, { createdAt: serverTimestamp() }));
+    } else {
+      entry.id = uid();
+      var arr = loadChildLogs(c.id);
+      arr.unshift(entry);
+      arr = arr.slice(0, 400);
+      saveChildLogs(c.id, arr);
+      state.logs = arr;
+      renderAll();
+    }
+  }
+  function deleteLog(id){
+    var c = currentChild(); if(!c) return;
+    if(isCloud()){
+      deleteDoc(doc(dbFs, "families", state.cloud.familyId, "children", c.id, "logs", id));
+    } else {
+      var arr = loadChildLogs(c.id).filter(function(l){ return l.id !== id; });
+      saveChildLogs(c.id, arr); state.logs = arr; renderAll();
+    }
+  }
+
+  function minutesBetween(date, start, end){
+    var s = new Date(date+"T"+start+":00"); var e = new Date(date+"T"+end+":00");
+    var diff = (e - s) / 60000; if(diff < 0) diff += 24*60; return diff;
+  }
+  function fmtDur(mins){ var h = Math.floor(mins/60), m = Math.round(mins%60); return h + t("unit_h") + (m ? " "+ (m<10?"0"+m:m) : ""); }
+  function fmtTime(d){ return d.toLocaleTimeString(state.lang, {hour:"2-digit", minute:"2-digit"}); }
+  function pad2(n){ return n<10 ? "0"+n : ""+n; }
+
+  /* ================= TIMER (per-device) ================= */
+  function timerKey(){ var c = currentChild(); return LS.timer + (c ? c.id : "none"); }
+  function loadTimer(){ state.activeTimer = loadLS(timerKey(), null); }
+  function startTimer(kind){
+    state.activeTimer = { kind: kind, startedAt: Date.now() };
+    saveLS(timerKey(), state.activeTimer);
+    renderTimer();
+  }
+  function stopTimer(){
+    if(!state.activeTimer) return;
+    var start = new Date(state.activeTimer.startedAt);
+    var end = new Date();
+    var mins = (end - start) / 60000;
+    addLog({ category:"sleep", kind: state.activeTimer.kind, date: start.toISOString().slice(0,10),
+              start: pad2(start.getHours())+":"+pad2(start.getMinutes()), end: pad2(end.getHours())+":"+pad2(end.getMinutes()),
+              mins: mins, note: "" , at: end.getTime()});
+    state.activeTimer = null;
+    saveLS(timerKey(), null);
+    renderTimer(); renderJournal();
+  }
+  var timerInterval = null;
+  function renderTimer(){
+    var box = document.getElementById("timerLive");
+    var startButtons = document.getElementById("btnStartNight").parentElement;
+    if(state.activeTimer){
+      box.hidden = false; startButtons.style.display = "none";
+      var sub = (state.activeTimer.kind === "night" ? t("timer_sub_night") : t("timer_sub_nap")) + fmtTime(new Date(state.activeTimer.startedAt));
+      document.getElementById("timerSub").textContent = sub;
+      if(timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(function(){
+        var mins = Math.floor((Date.now()-state.activeTimer.startedAt)/60000);
+        var h = Math.floor(mins/60), m = mins%60;
+        document.getElementById("timerElapsed").textContent = pad2(h)+":"+pad2(m);
+      }, 1000*10);
+      var mins0 = Math.floor((Date.now()-state.activeTimer.startedAt)/60000);
+      document.getElementById("timerElapsed").textContent = pad2(Math.floor(mins0/60))+":"+pad2(mins0%60);
+    } else {
+      box.hidden = true; startButtons.style.display = "flex";
+      if(timerInterval){ clearInterval(timerInterval); timerInterval = null; }
+    }
+    renderOrbit();
+  }
+
+  /* ================= SUGGESTION ================= */
+  function wakeWindowMinutes(months){
+    if(months == null) return null;
+    if(months < 3) return 60; if(months < 6) return 105; if(months < 9) return 150;
+    if(months < 12) return 195; if(months < 18) return 240; if(months < 24) return 300;
+    if(months < 36) return 360; return null;
+  }
+  function nextSuggestedSleep(){
+    var c = currentChild();
+    var months = c ? ageInMonths(c.birth) : null;
+    var ww = wakeWindowMinutes(months);
+    var lastSleep = state.logs.filter(function(l){ return l.category==="sleep" && l.end; })
+      .sort(function(a,b){ return (b.date+b.end) < (a.date+a.end) ? -1 : 1; })[0];
+    if(!ww || !lastSleep) return null;
+    var endDate = new Date(lastSleep.date + "T" + lastSleep.end + ":00");
+    return new Date(endDate.getTime() + ww*60000);
+  }
+  function renderSuggestion(){
+    var cap = document.getElementById("orbitCaption");
+    var next = nextSuggestedSleep();
+    if(!next){ cap.textContent = t("suggestion_none"); }
+    else { cap.innerHTML = t("suggestion_text").replace("{time}", fmtTime(next)); }
+  }
+
+  /* ================= DAY ORBIT (circular sleep-cycle visualization) =================
+     A 24h dial: noon at the top, midnight at the bottom, 6:00 on the left and
+     18:00 on the right (like a day/night sky arc). Each sleep log becomes an
+     arc positioned by its real clock time; the center shows either the running
+     timer's elapsed time or a live countdown to the next suggested nap. */
+  function polar(cx, cy, r, angleDeg){
+    var rad = angleDeg * Math.PI / 180;
+    return { x: cx + r*Math.sin(rad), y: cy - r*Math.cos(rad) };
+  }
+  function angleForHour(hourFloat){ return (hourFloat - 12) * 15; }
+  function hourFloatFromHHMM(str){
+    var p = String(str||"0:0").split(":");
+    return (parseInt(p[0],10)||0) + (parseInt(p[1],10)||0)/60;
+  }
+  function describeArc(cx, cy, r, startAngle, endAngle){
+    var s = polar(cx, cy, r, startAngle);
+    var e = polar(cx, cy, r, endAngle);
+    var sweep = endAngle - startAngle;
+    var largeArc = Math.abs(sweep) > 180 ? 1 : 0;
+    var sweepFlag = sweep >= 0 ? 1 : 0;
+    return "M "+s.x.toFixed(2)+" "+s.y.toFixed(2)+" A "+r+" "+r+" 0 "+largeArc+" "+sweepFlag+" "+e.x.toFixed(2)+" "+e.y.toFixed(2);
+  }
+  var orbitTickStarted = false;
+  function renderOrbit(){
+    var svg = document.getElementById("orbitSvg");
+    if(!svg) return;
+    var cx=150, cy=150, rTrack=118, rArc=98, rTick=132;
+    var parts = [];
+    // guide circle
+    parts.push('<circle cx="'+cx+'" cy="'+cy+'" r="'+rTrack+'" fill="none" stroke="var(--line)" stroke-width="1.5" stroke-dasharray="1 7" stroke-linecap="round"/>');
+    // hour ticks + labels at 00/06/12/18
+    [0,6,12,18].forEach(function(h){
+      var a = angleForHour(h);
+      var p1 = polar(cx,cy,rTrack-6,a), p2 = polar(cx,cy,rTrack+6,a), pl = polar(cx,cy,rTick,a);
+      parts.push('<line x1="'+p1.x+'" y1="'+p1.y+'" x2="'+p2.x+'" y2="'+p2.y+'" stroke="var(--ink-soft)" stroke-width="1.5" opacity="0.5"/>');
+      parts.push('<text x="'+pl.x+'" y="'+(pl.y+3)+'" font-size="9" text-anchor="middle" fill="var(--ink-soft)" font-family="IBM Plex Mono, monospace" opacity="0.7">'+pad2(h)+'</text>');
+    });
+    // sun (noon, top) / moon (midnight, bottom) landmarks
+    var sunP = polar(cx,cy,rTrack,0), moonP = polar(cx,cy,rTrack,180);
+    parts.push('<circle cx="'+sunP.x+'" cy="'+(sunP.y-16)+'" r="5" fill="var(--moon)" opacity="0.8"/>');
+    parts.push('<circle cx="'+moonP.x+'" cy="'+(moonP.y+16)+'" r="4" fill="var(--lavender)" opacity="0.7"/>');
+
+    // today + yesterday sleep logs only, drawn as arcs on the dial (older history stays in the list below, not on the dial)
+    var yesterdayStr = new Date(Date.now()-86400000).toISOString().slice(0,10);
+    var recent = state.logs.filter(function(l){
+      return l.category==="sleep" && l.start && l.mins && (l.date===today || l.date===yesterdayStr);
+    });
+    recent.forEach(function(l){
+      var startHour = hourFloatFromHHMM(l.start);
+      var a0 = angleForHour(startHour);
+      var a1 = a0 + (l.mins/60)*15;
+      var color = l.kind === "night" ? "var(--lavender)" : "var(--moon)";
+      parts.push('<path d="'+describeArc(cx,cy,rArc,a0,a1)+'" fill="none" stroke="'+color+'" stroke-width="12" stroke-linecap="round" opacity="0.85"/>');
+    });
+    // in-progress timer arc (dashed)
+    if(state.activeTimer){
+      var sh = new Date(state.activeTimer.startedAt);
+      var startHour2 = sh.getHours() + sh.getMinutes()/60;
+      var elapsedMin = (Date.now() - state.activeTimer.startedAt)/60000;
+      var a0b = angleForHour(startHour2);
+      var a1b = a0b + Math.max(elapsedMin,4)/60*15;
+      var color2 = state.activeTimer.kind === "night" ? "var(--lavender)" : "var(--moon)";
+      parts.push('<path d="'+describeArc(cx,cy,rArc,a0b,a1b)+'" fill="none" stroke="'+color2+'" stroke-width="12" stroke-linecap="round" stroke-dasharray="3 5" opacity="0.95"/>');
+    }
+    // "now" marker
+    var now = new Date();
+    var nowHour = now.getHours() + now.getMinutes()/60;
+    var nowP = polar(cx,cy,rTrack,angleForHour(nowHour));
+    parts.push('<circle class="orbit-now-dot" cx="'+nowP.x+'" cy="'+nowP.y+'" r="4.5" fill="var(--ink)"/>');
+
+    // center text
+    var line1, line2, line3, line2Size = 30;
+    if(state.activeTimer){
+      var mins = Math.max(0, Math.floor((Date.now()-state.activeTimer.startedAt)/60000));
+      line1 = t("orbit_running").replace("{type}", state.activeTimer.kind==="night" ? t("type_night") : t("type_nap"));
+      line2 = pad2(Math.floor(mins/60))+":"+pad2(mins%60);
+      line3 = t("orbit_since").replace("{time}", fmtTime(new Date(state.activeTimer.startedAt)));
+    } else {
+      var next = nextSuggestedSleep();
+      if(next){
+        var diffMin = Math.round((next - Date.now())/60000);
+        line1 = t("orbit_next_label");
+        if(diffMin <= 0){ line2 = t("orbit_overdue"); line2Size = 16; }
+        else { line2 = diffMin >= 60 ? Math.floor(diffMin/60)+t("unit_h")+" "+pad2(diffMin%60) : diffMin+" min"; }
+        line3 = t("orbit_towards").replace("{time}", fmtTime(next));
+      } else {
+        line1 = t("orbit_now_label");
+        line2 = fmtTime(now);
+        line3 = t("orbit_no_data");
+      }
+    }
+    parts.push('<text x="'+cx+'" y="'+(cy-14)+'" text-anchor="middle" font-size="12" fill="var(--ink-soft)" font-family="Karla, sans-serif" font-weight="700">'+escapeHtml(line1)+'</text>');
+    parts.push('<text x="'+cx+'" y="'+(cy+16)+'" text-anchor="middle" font-size="'+line2Size+'" fill="var(--ink)" font-family="Fraunces, serif" font-weight="600">'+escapeHtml(line2)+'</text>');
+    parts.push('<text x="'+cx+'" y="'+(cy+38)+'" text-anchor="middle" font-size="11" fill="var(--ink-soft)" font-family="Karla, sans-serif">'+escapeHtml(line3)+'</text>');
+
+    svg.setAttribute("viewBox","0 0 300 300");
+    svg.innerHTML = parts.join("");
+
+    if(!orbitTickStarted){
+      orbitTickStarted = true;
+      setInterval(renderOrbit, 20000);
+    }
+  }
+
+  /* ================= RENDER: i18n & shell ================= */
+  function renderI18n(){
+    document.documentElement.lang = state.lang;
+    document.querySelectorAll("[data-i18n]").forEach(function(el){ el.textContent = t(el.getAttribute("data-i18n")); });
+    document.querySelectorAll("[data-i18n-ph]").forEach(function(el){ el.placeholder = t(el.getAttribute("data-i18n-ph")); });
+    document.querySelectorAll(".lang-switch button").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-lang") === state.lang); });
+    renderGreeting();
+    var banner = document.getElementById("statusBanner");
+    if(isCloud()){
+      banner.className = "status-banner cloud";
+      banner.textContent = t("status_cloud") + " " + (state.cloud.user.email||"");
+    } else {
+      banner.className = "status-banner local";
+      banner.textContent = t("status_local");
+    }
+    renderChildPills(); renderChildrenManage();
+    renderAgePills("signals"); renderAgePills("nutrition");
+    renderSignals(); renderNutrition();
+    renderJournal(); renderFeedDiaper();
+    renderQuestions(); renderMoon(); renderTimer(); renderSuggestion();
+    renderQuickGrids();
+  }
+  function renderAll(){ renderChildPills(); renderChildrenManage(); renderJournal(); renderFeedDiaper(); renderQuestions(); renderTimer(); renderSuggestion(); }
+
+  function renderGreeting(){
+    var name = (state.profile.parent || "").trim();
+    document.getElementById("greetName").textContent = t("greeting") + (name ? ", " + name : " " + t("greeting_generic"));
+  }
+
+  function renderChildPills(){
+    ["childPillsJournal","childPillsFeeding"].forEach(function(hostId){
+      var host = document.getElementById(hostId);
+      host.innerHTML = "";
+      state.children.forEach(function(c){
+        var b = document.createElement("button");
+        b.className = "child-pill" + (c.id === state.currentChildId ? " active" : "");
+        b.textContent = c.name;
+        b.addEventListener("click", function(){ selectChild(c.id); });
+        host.appendChild(b);
+      });
+      if(!state.children.length){
+        var span = document.createElement("span");
+        span.className = "member-note"; span.textContent = t("child_none");
+        host.appendChild(span);
+      }
+    });
+  }
+
+  function renderChildrenManage(){
+    var host = document.getElementById("childrenManageList");
+    if(!state.children.length){ host.innerHTML = '<p class="empty">'+t("child_none")+"</p>"; return; }
+    host.innerHTML = state.children.map(function(c){
+      return '<div class="log-item"><span class="dot night"></span><div class="meta"><div class="top">'+escapeHtml(c.name)+'</div>'+
+        '<div class="sub mono">'+(c.birth || "—")+'</div></div></div>';
+    }).join("");
+  }
+
+  document.getElementById("btnAddChild").addEventListener("click", function(){
+    var name = document.getElementById("newChildName").value;
+    var birth = document.getElementById("newChildBirth").value;
+    if(!name.trim()) return;
+    addChild(name, birth);
+    document.getElementById("newChildName").value = ""; document.getElementById("newChildBirth").value = "";
+  });
+
+  /* ---------------- tabs ---------------- */
+  function goto(tab){
+    document.querySelectorAll("nav.tabs button").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-tab")===tab); });
+    document.querySelectorAll("section.panel").forEach(function(p){ p.classList.toggle("active", p.getAttribute("data-panel")===tab); });
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+  document.querySelectorAll("nav.tabs button").forEach(function(b){ b.addEventListener("click", function(){ goto(b.getAttribute("data-tab")); }); });
+  document.querySelectorAll("[data-goto]").forEach(function(b){ b.addEventListener("click", function(){ goto(b.getAttribute("data-goto")); }); });
+  document.querySelectorAll(".lang-switch button").forEach(function(b){ b.addEventListener("click", function(){ state.lang = b.getAttribute("data-lang"); saveLS(LS.lang, state.lang); renderI18n(); }); });
+
+  /* ---------------- profile ---------------- */
+  document.getElementById("pfParent").value = state.profile.parent || "";
+  document.getElementById("pfSave").addEventListener("click", function(){
+    state.profile = { parent: document.getElementById("pfParent").value.trim() };
+    saveLS(LS.profile, state.profile);
+    renderGreeting();
+  });
+
+  /* ---------------- age pills / tips ---------------- */
+  function renderAgePills(kind){
+    var host = document.getElementById(kind === "signals" ? "signalsAgePills" : "nutritionAgePills");
+    var accent = kind === "signals" ? "sage" : "terracotta";
+    var current = kind === "signals" ? state.signalsAge : state.nutritionAge;
+    host.innerHTML = "";
+    AGE_BANDS.forEach(function(b){
+      var btn = document.createElement("button");
+      var tag = (AGE_TAG[state.lang] && AGE_TAG[state.lang][b]) || "";
+      btn.innerHTML = AGE_LABEL[state.lang][b] + (tag ? '<span class="tag">'+tag+'</span>' : "");
+      btn.className = (b === current ? "active " + accent : "");
+      btn.addEventListener("click", function(){
+        if(kind === "signals"){ state.signalsAge = b; renderAgePills("signals"); renderSignals(); }
+        else{ state.nutritionAge = b; renderAgePills("nutrition"); renderNutrition(); }
+      });
+      host.appendChild(btn);
+    });
+  }
+  function tipIconSignals(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="7.5"/><path d="M12 8v4l3 2"/></svg>'; }
+  function tipIconNutrition(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v7M8 3v4a2 2 0 0 0 4 0M16 3c-1.4 0-2.5 1.7-2.5 4s1.1 4 2.5 4v10"/></svg>'; }
+  function renderSignals(){ document.getElementById("signalsList").innerHTML = SIGNALS[state.lang][state.signalsAge].map(function(x){ return "<li>"+tipIconSignals()+"<span>"+x+"</span></li>"; }).join(""); }
+  function renderNutrition(){ document.getElementById("nutritionList").innerHTML = NUTRITION[state.lang][state.nutritionAge].map(function(x){ return "<li>"+tipIconNutrition()+"<span>"+x+"</span></li>"; }).join(""); }
+
+  /* ---------------- journal ---------------- */
+  var today = new Date().toISOString().slice(0,10);
+  document.getElementById("logDate").value = today;
+  document.querySelectorAll(".type-toggle button").forEach(function(b){
+    b.addEventListener("click", function(){
+      state.logType = b.getAttribute("data-type");
+      document.querySelectorAll(".type-toggle button").forEach(function(x){ x.classList.toggle("active", x===b); });
+    });
+  });
+  document.getElementById("btnStartNight").addEventListener("click", function(){ startTimer("night"); });
+  document.getElementById("btnStartNap").addEventListener("click", function(){ startTimer("nap"); });
+  document.getElementById("btnStopTimer").addEventListener("click", stopTimer);
+
+  document.getElementById("logSave").addEventListener("click", function(){
+    var date = document.getElementById("logDate").value;
+    var start = document.getElementById("logStart").value;
+    var end = document.getElementById("logEnd").value;
+    var note = document.getElementById("logNote").value.trim();
+    if(!date || !start || !end) return;
+    var mins = minutesBetween(date, start, end);
+    addLog({ category:"sleep", kind: state.logType, date:date, start:start, end:end, mins:mins, note:note });
+    document.getElementById("logNote").value = "";
+  });
+
+  function renderJournal(){
+    var host = document.getElementById("sleepLogList");
+    var sleepLogs = state.logs.filter(function(l){ return l.category==="sleep"; }).sort(function(a,b){ return (a.date+a.start) < (b.date+b.start) ? 1 : -1; });
+    if(!sleepLogs.length){ host.innerHTML = '<li class="empty">'+t("log_empty")+"</li>"; }
+    else {
+      host.innerHTML = sleepLogs.slice(0,14).map(function(l){
+        return '<li class="log-item"><span class="dot '+l.kind+'"></span>' +
+          '<div class="meta"><div class="top">'+(l.kind==="night"?t("type_night"):t("type_nap"))+" · "+l.date+'</div>' +
+          '<div class="sub mono">'+l.start+"–"+l.end+(l.note? " · "+escapeHtml(l.note):"")+'</div></div>' +
+          '<div class="dur mono">'+fmtDur(l.mins)+'</div>' +
+          '<button class="del" data-id="'+(l.id||"")+'" aria-label="delete">×</button></li>';
+      }).join("");
+      host.querySelectorAll(".del").forEach(function(btn){ btn.addEventListener("click", function(){ deleteLog(btn.getAttribute("data-id")); }); });
+    }
+    renderChart(); renderSuggestion(); renderOrbit();
+    var lastNight = sleepLogs.filter(function(l){ return l.kind==="night"; })[0];
+    document.getElementById("statLastNight").textContent = lastNight ? fmtDur(lastNight.mins) : "–";
+    var napsToday = sleepLogs.filter(function(l){ return l.kind==="nap" && l.date===today; }).length;
+    document.getElementById("statNapsToday").textContent = napsToday;
+  }
+
+  function last7Days(){ var days=[]; for(var i=6;i>=0;i--){ var d=new Date(); d.setDate(d.getDate()-i); days.push(d.toISOString().slice(0,10)); } return days; }
+
+  function renderChart(){
+    var days = last7Days();
+    var sleepLogs = state.logs.filter(function(l){ return l.category==="sleep"; });
+    var totals = days.map(function(day){ return sleepLogs.filter(function(l){ return l.date===day; }).reduce(function(a,l){ return a+l.mins; },0) / 60; });
+    var max = Math.max(8, Math.ceil(Math.max.apply(null, totals)));
+    var svg = document.getElementById("chartSvg");
+    var W=280,H=130,padL=22,padB=18,padT=8,barGap=8;
+    var innerW = W-padL-8, innerH = H-padB-padT;
+    var barW = (innerW - barGap*(days.length-1))/days.length;
+    var parts = [];
+    parts.push('<line x1="'+padL+'" y1="'+padT+'" x2="'+padL+'" y2="'+(H-padB)+'" stroke="var(--line)" stroke-width="1"/>');
+    parts.push('<line x1="'+padL+'" y1="'+(H-padB)+'" x2="'+W+'" y2="'+(H-padB)+'" stroke="var(--line)" stroke-width="1"/>');
+    days.forEach(function(day, i){
+      var val = totals[i]; var h = innerH * (val/max); var x = padL + 6 + i*(barW+barGap); var y = H - padB - h;
+      parts.push('<rect x="'+x+'" y="'+y+'" width="'+barW+'" height="'+Math.max(h,1)+'" rx="3" fill="var(--lavender)"/>');
+      var lbl = new Date(day+"T00:00:00").toLocaleDateString(state.lang, {weekday:"narrow"});
+      parts.push('<text x="'+(x+barW/2)+'" y="'+(H-4)+'" font-size="8" text-anchor="middle" fill="var(--ink-soft)" font-family="Karla, sans-serif">'+lbl+'</text>');
+    });
+    parts.push('<text x="2" y="'+(padT+6)+'" font-size="8" fill="var(--ink-soft)" font-family="IBM Plex Mono, monospace">'+max+t("unit_h")+'</text>');
+    svg.innerHTML = parts.join("");
+  }
+
+  document.getElementById("shareWeekly").addEventListener("click", function(){
+    var days = last7Days();
+    var sleepLogs = state.logs.filter(function(l){ return l.category==="sleep"; });
+    var lines = days.map(function(day){ var mins = sleepLogs.filter(function(l){ return l.date===day; }).reduce(function(a,l){ return a+l.mins; },0); return day+": "+fmtDur(mins); });
+    var c = currentChild();
+    var header = state.lang==="fr" ? "Résumé de sommeil (7 jours)"+(c?" – "+c.name:"") : state.lang==="en" ? "Sleep summary (7 days)"+(c?" – "+c.name:"") : "Resumen de sueño (7 días)"+(c?" – "+c.name:"");
+    openWhats(header+"\n"+lines.join("\n"));
+  });
+
+  /* ---------------- feeding & diaper ---------------- */
+  function renderQuickGrids(){
+    var fg = document.getElementById("feedQuickGrid");
+    fg.innerHTML = FEED_TYPES.map(function(f){ return '<button class="quick-btn" data-feed="'+f.kind+'">'+f.icon+t(f.labelKey)+"</button>"; }).join("");
+    fg.querySelectorAll("[data-feed]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var now = new Date();
+        addLog({ category:"feed", kind: btn.getAttribute("data-feed"), date: now.toISOString().slice(0,10), at: pad2(now.getHours())+":"+pad2(now.getMinutes()), note:"" });
+      });
+    });
+    var dg = document.getElementById("diaperQuickGrid");
+    dg.innerHTML = DIAPER_TYPES.map(function(d){ return '<button class="quick-btn diaper" data-diaper="'+d.kind+'">'+d.icon+t(d.labelKey)+"</button>"; }).join("");
+    dg.querySelectorAll("[data-diaper]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var now = new Date();
+        addLog({ category:"diaper", kind: btn.getAttribute("data-diaper"), date: now.toISOString().slice(0,10), at: pad2(now.getHours())+":"+pad2(now.getMinutes()), note:"" });
+      });
+    });
+  }
+  function renderFeedDiaper(){
+    var feedLogs = state.logs.filter(function(l){ return l.category==="feed"; }).sort(function(a,b){ return (a.date+a.at) < (b.date+b.at) ? 1 : -1; });
+    var host = document.getElementById("feedLogList");
+    host.innerHTML = feedLogs.length ? feedLogs.slice(0,12).map(function(l){
+      return '<li class="log-item"><span class="dot '+l.kind+'"></span><div class="meta"><div class="top">'+t("feed_"+ (l.kind==="breast_l"?"breast_l":l.kind==="breast_r"?"breast_r":l.kind))+'</div><div class="sub mono">'+l.date+" · "+l.at+'</div></div>' +
+        '<button class="del" data-id="'+(l.id||"")+'" aria-label="delete">×</button></li>';
+    }).join("") : '<li class="empty">'+t("feed_empty")+"</li>";
+    host.querySelectorAll(".del").forEach(function(btn){ btn.addEventListener("click", function(){ deleteLog(btn.getAttribute("data-id")); }); });
+
+    var diaperLogs = state.logs.filter(function(l){ return l.category==="diaper"; }).sort(function(a,b){ return (a.date+a.at) < (b.date+b.at) ? 1 : -1; });
+    var host2 = document.getElementById("diaperLogList");
+    host2.innerHTML = diaperLogs.length ? diaperLogs.slice(0,12).map(function(l){
+      return '<li class="log-item"><span class="dot '+l.kind+'"></span><div class="meta"><div class="top">'+t("diaper_"+l.kind)+'</div><div class="sub mono">'+l.date+" · "+l.at+'</div></div>' +
+        '<button class="del" data-id="'+(l.id||"")+'" aria-label="delete">×</button></li>';
+    }).join("") : '<li class="empty">'+t("diaper_empty")+"</li>";
+    host2.querySelectorAll(".del").forEach(function(btn){ btn.addEventListener("click", function(){ deleteLog(btn.getAttribute("data-id")); }); });
+
+    var feedsToday = feedLogs.filter(function(l){ return l.date===today; }).length;
+    document.getElementById("statFeedsToday").textContent = feedsToday;
+  }
+
+  /* ---------------- questions ---------------- */
+  function renderQuestions(){
+    var host = document.getElementById("qList");
+    document.getElementById("statQuestions").textContent = state.questions.length;
+    if(!state.questions.length){ host.innerHTML = '<li class="empty">'+t("q_empty")+"</li>"; return; }
+    host.innerHTML = state.questions.slice(0,20).map(function(q){
+      var d = new Date(q.at);
+      return '<li class="q-item"><div class="qtext">'+escapeHtml(q.text)+'</div><div class="qmeta"><span class="mono">'+d.toLocaleDateString(state.lang)+'</span><span class="pill-sent">'+t("q_sent")+'</span></div></li>';
+    }).join("");
+  }
+  function recordQuestion(text){
+    if(!text.trim()) return;
+    if(isCloud()){
+      addDoc(collection(dbFs, "families", state.cloud.familyId, "questions"), { text:text.trim(), at: Date.now(), from: state.cloud.user.email });
+    } else {
+      state.questions.unshift({ text:text.trim(), at:Date.now() }); state.questions = state.questions.slice(0,100);
+      saveLS(LS.questions, state.questions); renderQuestions();
+    }
+  }
+  function openWhats(text){ window.open("https://wa.me/"+CONTACT.whatsapp+"?text="+encodeURIComponent(text), "_blank", "noopener"); }
+  function openMail(subject, text){ window.location.href = "mailto:"+CONTACT.email+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(text); }
+  document.getElementById("sendWhats").addEventListener("click", function(){
+    var txt = document.getElementById("qText").value; if(!txt.trim()) return;
+    var name = state.profile.parent ? " ("+state.profile.parent+")" : "";
+    openWhats(txt+name); recordQuestion(txt); document.getElementById("qText").value = "";
+  });
+  document.getElementById("sendMail").addEventListener("click", function(){
+    var txt = document.getElementById("qText").value; if(!txt.trim()) return;
+    var name = state.profile.parent ? state.profile.parent : "";
+    openMail("Question – Planète Dodo"+(name?" ("+name+")":""), txt); recordQuestion(txt); document.getElementById("qText").value = "";
+  });
+
+  /* ---------------- moon phase (approximate) ---------------- */
+  function renderMoon(){
+    var synodic = 29.53058867; var known = Date.UTC(2000,0,6,18,14);
+    var days = (Date.now() - known) / 86400000; var phase = (days % synodic + synodic) % synodic; var frac = phase / synodic;
+    var illum = (1 - Math.cos(frac*2*Math.PI)) / 2; var waxing = frac < 0.5;
+    var shadowW = 24 * (1 - illum);
+    var el = document.getElementById("moonShadow");
+    el.style.width = shadowW + "px"; el.style.left = waxing ? "0" : (24 - shadowW) + "px";
+    var key;
+    if(frac < 0.03 || frac > 0.97) key="moon_new"; else if(frac < 0.22) key="moon_wax_cres"; else if(frac < 0.28) key="moon_first";
+    else if(frac < 0.47) key="moon_wax_gib"; else if(frac < 0.53) key="moon_full"; else if(frac < 0.72) key="moon_wan_gib";
+    else if(frac < 0.78) key="moon_last"; else key="moon_wan_cres";
+    document.getElementById("moonLabel").textContent = t("moon_label")+" "+t(key);
+  }
+
+  /* ================= AUTH (cloud mode only) ================= */
+  function showAuthTab(tab){
+    document.querySelectorAll(".auth-tabs button").forEach(function(b){ b.classList.toggle("active", b.getAttribute("data-authtab")===tab); });
+    document.getElementById("formLogin").hidden = tab !== "login";
+    document.getElementById("formSignup").hidden = tab !== "signup";
+    document.getElementById("formJoin").hidden = tab !== "join";
+    document.getElementById("authError").hidden = true;
+  }
+  function authErr(msg){ var e = document.getElementById("authError"); e.textContent = msg || t("auth_error_generic"); e.hidden = false; }
+
+  function randomCode(){ var chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; var s=""; for(var i=0;i<6;i++) s+=chars[Math.floor(Math.random()*chars.length)]; return s; }
+
+  function bootstrapFamilyForNewUser(userCred, familyName){
+    var uidv = userCred.user.uid;
+    var famRef = doc(collection(dbFs, "families"));
+    var code = randomCode();
+    return setDoc(famRef, { name: familyName, ownerUid: uidv, members: [uidv], inviteCode: code, createdAt: serverTimestamp() })
+      .then(function(){ return setDoc(doc(dbFs, "inviteCodes", code), { familyId: famRef.id }); })
+      .then(function(){ return setDoc(doc(dbFs, "users", uidv), { familyId: famRef.id }); });
+  }
+  function joinFamilyWithCode(userCred, code){
+    var uidv = userCred.user.uid;
+    return getDoc(doc(dbFs, "inviteCodes", code.trim().toUpperCase())).then(function(snap){
+      if(!snap.exists()) throw new Error("invalid-code");
+      var familyId = snap.data().familyId;
+      return updateDoc(doc(dbFs, "families", familyId), { members: arrayUnion(uidv) })
+        .then(function(){ return setDoc(doc(dbFs, "users", uidv), { familyId: familyId }); });
+    });
+  }
+
+  function wireCloudAuth(){
+    setPersistence(auth, browserLocalPersistence).catch(function(){});
+
+    document.querySelectorAll(".auth-tabs button").forEach(function(b){ b.addEventListener("click", function(){ showAuthTab(b.getAttribute("data-authtab")); }); });
+
+    document.getElementById("formLogin").addEventListener("submit", function(e){
+      e.preventDefault();
+      signInWithEmailAndPassword(auth, document.getElementById("loginEmail").value, document.getElementById("loginPassword").value)
+        .catch(function(err){ authErr(err.message); });
+    });
+    document.getElementById("formSignup").addEventListener("submit", function(e){
+      e.preventDefault();
+      var familyName = document.getElementById("signupFamily").value;
+      createUserWithEmailAndPassword(auth, document.getElementById("signupEmail").value, document.getElementById("signupPassword").value)
+        .then(function(cred){ return bootstrapFamilyForNewUser(cred, familyName); })
+        .catch(function(err){ authErr(err.message); });
+    });
+    document.getElementById("formJoin").addEventListener("submit", function(e){
+      e.preventDefault();
+      var code = document.getElementById("joinCode").value;
+      createUserWithEmailAndPassword(auth, document.getElementById("joinEmail").value, document.getElementById("joinPassword").value)
+        .then(function(cred){ return joinFamilyWithCode(cred, code); })
+        .catch(function(err){ authErr(err.message); });
+    });
+    document.getElementById("btnLogout").addEventListener("click", function(){ signOut(auth); });
+
+    onAuthStateChanged(auth, function(user){
+      unsubAllCloud();
+      if(user){
+        state.cloud.user = user;
+        document.getElementById("authScreen").hidden = true;
+        document.getElementById("appRoot").style.display = "";
+        document.getElementById("accountChip").hidden = false;
+        document.getElementById("accountEmail").textContent = user.email;
+        document.getElementById("cloudFamilyBox").hidden = false;
+        document.getElementById("localFamilyBox").hidden = true;
+        getDoc(doc(dbFs, "users", user.uid)).then(function(snap){
+          if(!snap.exists()){ authErr(); return; }
+          state.cloud.familyId = snap.data().familyId;
+          attachFamilyListeners();
+        });
+      } else {
+        state.cloud.user = null; state.cloud.familyId = null;
+        document.getElementById("authScreen").hidden = false;
+        document.getElementById("appRoot").style.display = "none";
+      }
+    });
+  }
+
+  function startLocalMode(){
+    document.getElementById("authScreen").hidden = true;
+    document.getElementById("appRoot").style.display = "";
+    loadLocalChildLogsIntoState();
+    (function(){ var c = currentChild(); if(c){ var b = bandFromBirth(c.birth); state.signalsAge=b; state.nutritionAge=b; } })();
+    renderI18n();
+  }
+
+  function startCloudMode(){
+    document.getElementById("authScreen").hidden = false;
+    document.getElementById("appRoot").style.display = "none";
+    Promise.all([
+      import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"),
+      import("https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"),
+      import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js")
+    ]).then(function(mods){
+      var appMod = mods[0], authMod = mods[1], fsMod = mods[2];
+      initializeApp = appMod.initializeApp;
+      getAuth = authMod.getAuth; onAuthStateChanged = authMod.onAuthStateChanged;
+      createUserWithEmailAndPassword = authMod.createUserWithEmailAndPassword;
+      signInWithEmailAndPassword = authMod.signInWithEmailAndPassword;
+      signOut = authMod.signOut; setPersistence = authMod.setPersistence;
+      browserLocalPersistence = authMod.browserLocalPersistence;
+      getFirestore = fsMod.getFirestore; doc = fsMod.doc; getDoc = fsMod.getDoc; setDoc = fsMod.setDoc;
+      updateDoc = fsMod.updateDoc; addDoc = fsMod.addDoc; deleteDoc = fsMod.deleteDoc;
+      collection = fsMod.collection; query = fsMod.query; orderBy = fsMod.orderBy; limit = fsMod.limit;
+      onSnapshot = fsMod.onSnapshot; arrayUnion = fsMod.arrayUnion; serverTimestamp = fsMod.serverTimestamp;
+
+      fbApp = initializeApp(firebaseConfig);
+      auth = getAuth(fbApp);
+      dbFs = getFirestore(fbApp);
+      wireCloudAuth();
+      renderI18n();
+    }).catch(function(err){
+      console.warn("Planète Dodo: no se pudo cargar Firebase, sigo en modo local.", err);
+      CLOUD_ENABLED = false;
+      startLocalMode();
+    });
+  }
+
+  if(CLOUD_ENABLED){ startCloudMode(); } else { startLocalMode(); }
+
+  function unsubAllCloud(){ state.cloud.unsub.forEach(function(u){ u(); }); state.cloud.unsub = []; }
+
+  function attachFamilyListeners(){
+    var famId = state.cloud.familyId;
+    state.cloud.unsub.push(onSnapshot(doc(dbFs, "families", famId), function(snap){
+      if(!snap.exists()) return;
+      document.getElementById("inviteCodeDisplay").textContent = snap.data().inviteCode || "------";
+    }));
+    state.cloud.unsub.push(onSnapshot(collection(dbFs, "families", famId, "children"), function(snap){
+      state.children = snap.docs.map(function(d){ return Object.assign({ id:d.id }, d.data()); });
+      if(!state.currentChildId || !state.children.find(function(c){ return c.id===state.currentChildId; })){
+        state.currentChildId = state.children[0] ? state.children[0].id : null;
+      }
+      var c = currentChild();
+      if(c){ var b = bandFromBirth(c.birth); state.signalsAge = b; state.nutritionAge = b; attachChildLogsListener(c.id); }
+      renderI18n();
+    }));
+    state.cloud.unsub.push(onSnapshot(query(collection(dbFs, "families", famId, "questions"), orderBy("at","desc"), limit(50)), function(snap){
+      state.questions = snap.docs.map(function(d){ return d.data(); });
+      renderQuestions();
+    }));
+  }
+  var childLogsUnsub = null;
+  function attachChildLogsListener(childId){
+    if(childLogsUnsub) childLogsUnsub();
+    childLogsUnsub = onSnapshot(query(collection(dbFs, "families", state.cloud.familyId, "children", childId, "logs"), orderBy("date","desc"), limit(300)), function(snap){
+      state.logs = snap.docs.map(function(d){ return Object.assign({ id:d.id }, d.data()); });
+      renderJournal(); renderFeedDiaper();
+    });
+  }
+
+  document.getElementById("btnCopyCode").addEventListener("click", function(){
+    var code = document.getElementById("inviteCodeDisplay").textContent;
+    if(navigator.clipboard) navigator.clipboard.writeText(code);
+  });
+
+  if("serviceWorker" in navigator){
+    window.addEventListener("load", function(){
+      navigator.serviceWorker.register("sw.js").catch(function(){ /* offline install is a bonus, not required */ });
+    });
+  }
+})();
+</script>
+</body>
+</html>
