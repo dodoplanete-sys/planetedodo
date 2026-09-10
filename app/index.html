@@ -237,7 +237,9 @@
   .auth-tabs button.active{ background:var(--ink); color:var(--parchment); border-color:var(--ink); }
   .auth-field{ margin-bottom:12px; }
   .auth-error{ background:var(--terracotta-soft); color:var(--terracotta); font-size:.8rem; padding:9px 12px; border-radius:9px; margin-bottom:12px; }
+  .auth-success{ background:var(--sage-soft); color:var(--sage); font-size:.8rem; padding:9px 12px; border-radius:9px; margin-bottom:12px; }
   .auth-hint{ font-size:.76rem; color:var(--ink-soft); margin-top:10px; text-align:center; }
+  .auth-link-btn{ background:none; border:none; padding:0; margin-top:10px; font-size:.8rem; color:var(--lavender); text-decoration:underline; cursor:pointer; display:block; width:100%; text-align:center; }
 
   footer{ border-top:1px solid var(--line); padding:20px 0 36px; color:var(--ink-soft); font-size:.75rem; text-align:center; line-height:1.7; }
   footer strong{ color:var(--ink); }
@@ -259,11 +261,13 @@
       <button data-authtab="join" data-i18n="auth_join"></button>
     </div>
     <div class="auth-error" id="authError" hidden></div>
+    <div class="auth-success" id="authSuccess" hidden></div>
 
     <form id="formLogin">
       <div class="auth-field"><label data-i18n="auth_email"></label><input type="email" id="loginEmail" required autocomplete="email"></div>
       <div class="auth-field"><label data-i18n="auth_password"></label><input type="password" id="loginPassword" required autocomplete="current-password"></div>
       <button type="submit" class="btn btn-primary btn-block" data-i18n="auth_login_btn"></button>
+      <button type="button" class="auth-link-btn" id="btnForgotPassword" data-i18n="auth_forgot"></button>
     </form>
 
     <form id="formSignup" hidden>
@@ -540,7 +544,7 @@ const CONTACT = {
 var CLOUD_ENABLED = !!(firebaseConfig.apiKey && firebaseConfig.apiKey.indexOf("YOUR_") !== 0);
 var fbApp, auth, dbFs;
 var initializeApp, getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword,
-    signOut, setPersistence, browserLocalPersistence;
+    signOut, setPersistence, browserLocalPersistence, sendPasswordResetEmail;
 var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection, query,
     orderBy, limit, onSnapshot, arrayUnion, serverTimestamp;
 
@@ -606,7 +610,19 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
       auth_email:"Email", auth_password:"Contraseña", auth_familyname:"Nombre de tu familia",
       auth_invitecode:"Código de invitación", auth_login_btn:"Ingresar", auth_signup_btn:"Crear mi familia",
       auth_join_btn:"Unirme a la familia", auth_logout:"Salir",
+      auth_forgot:"¿Olvidaste tu contraseña?",
+      auth_forgot_need_email:"Escribí tu email arriba y volvé a hacer clic para recibir el link de recuperación.",
+      auth_forgot_sent:"Te enviamos un email con un link para crear una contraseña nueva. Revisá también la carpeta de spam.",
       auth_error_generic:"Algo no funcionó. Revisá los datos e intentá de nuevo.",
+      err_too_many_requests:"Demasiados intentos seguidos — no hace falta ningún código. Esperá unos minutos y volvé a intentar, o usá \"¿Olvidaste tu contraseña?\".",
+      err_wrong_password:"La contraseña no es correcta. Probá de nuevo o hacé clic en \"¿Olvidaste tu contraseña?\".",
+      err_user_not_found:"No encontramos una cuenta con ese email. Si es tu primera vez, usá \"Crear cuenta\".",
+      err_invalid_credential:"El email o la contraseña no son correctos. Probá de nuevo o hacé clic en \"¿Olvidaste tu contraseña?\".",
+      err_invalid_email:"Ese email no parece válido. Revisá que esté bien escrito.",
+      err_email_in_use:"Ya existe una cuenta con ese email. Probá ingresar en la pestaña \"Ingresar\".",
+      err_weak_password:"La contraseña necesita al menos 6 caracteres.",
+      err_network:"No hay conexión a internet en este momento. Revisá tu conexión e intentá de nuevo.",
+      err_invalid_code:"Ese código de invitación no es válido. Revisalo con quien te lo compartió.",
       status_local:"Modo local: tus datos se guardan solo en este dispositivo. Seguí la guía de configuración para sincronizar entre dispositivos.",
       status_cloud:"Sincronizado en la nube · conectado como"
     },
@@ -659,7 +675,19 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
       auth_email:"Email", auth_password:"Mot de passe", auth_familyname:"Nom de votre famille",
       auth_invitecode:"Code d'invitation", auth_login_btn:"Se connecter", auth_signup_btn:"Créer ma famille",
       auth_join_btn:"Rejoindre la famille", auth_logout:"Déconnexion",
+      auth_forgot:"Mot de passe oublié ?",
+      auth_forgot_need_email:"Écrivez votre email ci-dessus puis recliquez pour recevoir le lien de récupération.",
+      auth_forgot_sent:"Nous vous avons envoyé un e-mail avec un lien pour créer un nouveau mot de passe. Vérifiez aussi vos courriers indésirables.",
       auth_error_generic:"Une erreur est survenue. Vérifiez les informations et réessayez.",
+      err_too_many_requests:"Trop de tentatives d'affilée — aucun code n'est requis. Attendez quelques minutes et réessayez, ou utilisez « Mot de passe oublié ? ».",
+      err_wrong_password:"Le mot de passe est incorrect. Réessayez ou cliquez sur « Mot de passe oublié ? ».",
+      err_user_not_found:"Aucun compte trouvé avec cet e-mail. Si c'est votre première fois, utilisez « Créer un compte ».",
+      err_invalid_credential:"L'e-mail ou le mot de passe est incorrect. Réessayez ou cliquez sur « Mot de passe oublié ? ».",
+      err_invalid_email:"Cet e-mail ne semble pas valide. Vérifiez qu'il est bien écrit.",
+      err_email_in_use:"Un compte existe déjà avec cet e-mail. Essayez de vous connecter dans l'onglet « Connexion ».",
+      err_weak_password:"Le mot de passe doit contenir au moins 6 caractères.",
+      err_network:"Pas de connexion internet pour le moment. Vérifiez votre connexion et réessayez.",
+      err_invalid_code:"Ce code d'invitation n'est pas valide. Vérifiez-le avec la personne qui vous l'a partagé.",
       status_local:"Mode local : vos données sont enregistrées uniquement sur cet appareil. Suivez le guide de configuration pour synchroniser.",
       status_cloud:"Synchronisé dans le cloud · connecté en tant que"
     },
@@ -712,7 +740,19 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
       auth_email:"Email", auth_password:"Password", auth_familyname:"Your family's name",
       auth_invitecode:"Invite code", auth_login_btn:"Log in", auth_signup_btn:"Create my family",
       auth_join_btn:"Join the family", auth_logout:"Log out",
+      auth_forgot:"Forgot your password?",
+      auth_forgot_need_email:"Type your email above, then click again to get the reset link.",
+      auth_forgot_sent:"We sent you an email with a link to set a new password. Check your spam folder too.",
       auth_error_generic:"Something didn't work. Check the details and try again.",
+      err_too_many_requests:"Too many attempts in a row — no code is needed. Wait a few minutes and try again, or use \"Forgot your password?\".",
+      err_wrong_password:"That password isn't right. Try again or click \"Forgot your password?\".",
+      err_user_not_found:"We couldn't find an account with that email. If this is your first time, use \"Sign up\".",
+      err_invalid_credential:"That email or password isn't right. Try again or click \"Forgot your password?\".",
+      err_invalid_email:"That email doesn't look valid. Check that it's typed correctly.",
+      err_email_in_use:"An account already exists with that email. Try logging in from the \"Log in\" tab.",
+      err_weak_password:"The password needs at least 6 characters.",
+      err_network:"No internet connection right now. Check your connection and try again.",
+      err_invalid_code:"That invite code isn't valid. Double-check it with whoever shared it with you.",
       status_local:"Local mode: your data is saved only on this device. Follow the setup guide to sync across devices.",
       status_cloud:"Synced in the cloud · signed in as"
     }
@@ -1345,7 +1385,30 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
     document.getElementById("formJoin").hidden = tab !== "join";
     document.getElementById("authError").hidden = true;
   }
-  function authErr(msg){ var e = document.getElementById("authError"); e.textContent = msg || t("auth_error_generic"); e.hidden = false; }
+  function authErr(msg){
+    document.getElementById("authSuccess").hidden = true;
+    var e = document.getElementById("authError"); e.textContent = msg || t("auth_error_generic"); e.hidden = false;
+  }
+  function authOk(msg){
+    document.getElementById("authError").hidden = true;
+    var e = document.getElementById("authSuccess"); e.textContent = msg; e.hidden = false;
+  }
+  var AUTH_ERR_KEYS = {
+    "auth/too-many-requests":"err_too_many_requests",
+    "auth/wrong-password":"err_wrong_password",
+    "auth/user-not-found":"err_user_not_found",
+    "auth/invalid-credential":"err_invalid_credential",
+    "auth/invalid-email":"err_invalid_email",
+    "auth/email-already-in-use":"err_email_in_use",
+    "auth/weak-password":"err_weak_password",
+    "auth/network-request-failed":"err_network"
+  };
+  function authErrorMessage(err){
+    var key = err && err.code && AUTH_ERR_KEYS[err.code];
+    if(key) return t(key);
+    if(err && err.message === "invalid-code") return t("err_invalid_code");
+    return (err && err.message) || t("auth_error_generic");
+  }
 
   function randomCode(){ var chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; var s=""; for(var i=0;i<6;i++) s+=chars[Math.floor(Math.random()*chars.length)]; return s; }
 
@@ -1375,23 +1438,31 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
     document.getElementById("formLogin").addEventListener("submit", function(e){
       e.preventDefault();
       signInWithEmailAndPassword(auth, document.getElementById("loginEmail").value, document.getElementById("loginPassword").value)
-        .catch(function(err){ authErr(err.message); });
+        .catch(function(err){ authErr(authErrorMessage(err)); });
     });
     document.getElementById("formSignup").addEventListener("submit", function(e){
       e.preventDefault();
       var familyName = document.getElementById("signupFamily").value;
       createUserWithEmailAndPassword(auth, document.getElementById("signupEmail").value, document.getElementById("signupPassword").value)
         .then(function(cred){ return bootstrapFamilyForNewUser(cred, familyName); })
-        .catch(function(err){ authErr(err.message); });
+        .catch(function(err){ authErr(authErrorMessage(err)); });
     });
     document.getElementById("formJoin").addEventListener("submit", function(e){
       e.preventDefault();
       var code = document.getElementById("joinCode").value;
       createUserWithEmailAndPassword(auth, document.getElementById("joinEmail").value, document.getElementById("joinPassword").value)
         .then(function(cred){ return joinFamilyWithCode(cred, code); })
-        .catch(function(err){ authErr(err.message); });
+        .catch(function(err){ authErr(authErrorMessage(err)); });
     });
     document.getElementById("btnLogout").addEventListener("click", function(){ signOut(auth); });
+
+    document.getElementById("btnForgotPassword").addEventListener("click", function(){
+      var email = document.getElementById("loginEmail").value.trim();
+      if(!email){ authErr(t("auth_forgot_need_email")); return; }
+      sendPasswordResetEmail(auth, email)
+        .then(function(){ authOk(t("auth_forgot_sent")); })
+        .catch(function(err){ authErr(authErrorMessage(err)); });
+    });
 
     onAuthStateChanged(auth, function(user){
       unsubAllCloud();
@@ -1439,6 +1510,7 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
       signInWithEmailAndPassword = authMod.signInWithEmailAndPassword;
       signOut = authMod.signOut; setPersistence = authMod.setPersistence;
       browserLocalPersistence = authMod.browserLocalPersistence;
+      sendPasswordResetEmail = authMod.sendPasswordResetEmail;
       getFirestore = fsMod.getFirestore; doc = fsMod.doc; getDoc = fsMod.getDoc; setDoc = fsMod.setDoc;
       updateDoc = fsMod.updateDoc; addDoc = fsMod.addDoc; deleteDoc = fsMod.deleteDoc;
       collection = fsMod.collection; query = fsMod.query; orderBy = fsMod.orderBy; limit = fsMod.limit;
