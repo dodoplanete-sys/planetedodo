@@ -360,15 +360,6 @@
       <div class="card stat-tile accent-sage"><div class="num mono" id="statQuestions">0</div><div class="lbl" data-i18n="stat_questions"></div></div>
     </div>
 
-    <div class="card bio-card pad">
-      <div class="avatar"></div>
-      <div>
-        <h3 data-i18n="bio_title" style="font-size:1.02rem;font-weight:600;"></h3>
-        <p data-i18n="bio_text"></p>
-        <div class="credentials" data-i18n="bio_credentials"></div>
-      </div>
-    </div>
-
     <div class="quicklinks">
       <button class="quicklink c-lavender" data-goto="journal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3.5 2"/></svg><b data-i18n="tab_journal"></b><span data-i18n="qlink_journal"></span></button>
       <button class="quicklink c-teal" data-goto="feeding"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3v9a4 4 0 0 0 8 0V3M10 3v6"/><path d="M18 3v18"/></svg><b data-i18n="tab_feeding"></b><span data-i18n="qlink_feeding"></span></button>
@@ -458,6 +449,10 @@
     <div class="section-head"><h2 data-i18n="tab_nutrition"></h2><p data-i18n="nutrition_intro"></p></div>
     <div class="age-pills" id="nutritionAgePills"></div>
     <ul class="tip-list" id="nutritionList"></ul>
+    <div class="card pad" style="margin-top:16px;">
+      <h3 style="font-size:.83rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin-bottom:10px;" data-i18n="recipes_title"></h3>
+      <ul class="tip-list" id="recipesList"></ul>
+    </div>
     <p class="disclaimer" data-i18n="nutrition_disclaimer"></p>
   </section>
 
@@ -513,8 +508,7 @@
 
 <footer>
   <div class="wrap">
-    <div data-i18n="footer_credentials"></div>
-    <div style="margin-top:6px;">Planète Dodo · <strong>Luisa Suarez</strong></div>
+    <div>Planète Dodo · <strong>Luisa Suarez</strong></div>
   </div>
 </footer>
 
@@ -538,8 +532,8 @@ const firebaseConfig = {
 
 /* ======= Contact info — edit with your real WhatsApp/email ======= */
 const CONTACT = {
-  whatsapp: "00000000000", // country code + number, digits only, e.g. 15551234567
-  email: "tu-email-aqui@ejemplo.com"
+  whatsapp: "15817489660", // country code + number, digits only, e.g. 15551234567
+  email: "dodoplanete@gmail.com"
 };
 /* =================================================================== */
 
@@ -564,14 +558,11 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
   /* ---------------- i18n ---------------- */
   var T = {
     es:{
-      tagline:"Acompañamiento del sueño infantil, sin lágrimas",
+      tagline:"Acompañamiento del sueño infantil",
       tab_home:"Inicio", tab_journal:"Diario de sueño", tab_feeding:"Tomas y pañales", tab_signals:"Señales de sueño",
       tab_nutrition:"Nutrición y sueño", tab_questions:"Preguntas", tab_family:"Familia",
       greeting:"Hola", greeting_generic:"familia",
       stat_lastnight:"Última noche", stat_napstoday:"Siestas hoy", stat_feedstoday:"Tomas hoy", stat_questions:"Preguntas enviadas",
-      bio_title:"Sobre Luisa",
-      bio_text:"Soy Luisa Suarez, pedagoga del sueño certificada por el Institut SOMNA. Acompaño a familias de 0 a 12 años con la somnopedagogía™, un método que mira el sueño desde ocho ángulos: neurociencia, apego, nutrición, regulación emocional, entorno, ritmos biológicos, dinámica familiar y medicina integrativa. Sin métodos de dejar llorar.",
-      bio_credentials:"Certificada por el Institut SOMNA · Reconocida por 13 asociaciones profesionales en 13 países",
       qlink_journal:"Cronómetro y registro de sueño", qlink_feeding:"Tomas y pañales del día",
       qlink_signals:"Señales según la edad", qlink_nutrition:"Consejos de alimentación pro-sueño", qlink_questions:"Escribile a Luisa tus dudas",
       journal_intro:"Iniciá el cronómetro al dormir a tu hijo/a, o cargá el registro a mano. Vas a ver los patrones y podés compartirlos con Luisa.",
@@ -596,6 +587,7 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
       feed_empty:"Sin tomas registradas todavía.", diaper_empty:"Sin pañales registrados todavía.",
       signals_intro:"Reconocer las señales de sueño a tiempo evita el exceso de cansancio, que hace más difícil dormirse. Elegí la edad para ver las señales típicas de esa etapa.",
       nutrition_intro:"La alimentación influye en el sueño: horarios, tipo de alimentos e hidratación pueden favorecer o dificultar el descanso.",
+      recipes_title:"Recetas pro-sueño según la edad",
       nutrition_disclaimer:"Estos consejos son generales y educativos; no reemplazan una consulta con tu pediatra o nutricionista.",
       questions_intro:"¿Tenés una duda? Escribila acá. Podés enviarla directamente por WhatsApp o email, y queda guardada en tu historial.",
       q_label:"Tu pregunta", q_placeholder:"Escribí tu pregunta o duda...",
@@ -607,7 +599,6 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
       profile_title:"Tu nombre", profile_parent:"Tu nombre", profile_save:"Guardar", profile_birth:"Fecha de nacimiento",
       auth_family_code_label:"Código de tu familia", auth_copy_code:"Copiar",
       invite_note:"Compartí este código con tu pareja o niñera: al crear su cuenta con la opción \"Unirme con código\", van a ver el mismo registro.",
-      footer_credentials:"Certificada por el Institut SOMNA · Reconocida por 13 asociaciones profesionales en 13 países",
       moon_new:"Luna nueva", moon_wax_cres:"Creciente", moon_first:"Cuarto creciente", moon_wax_gib:"Gibosa creciente",
       moon_full:"Luna llena", moon_wan_gib:"Gibosa menguante", moon_last:"Cuarto menguante", moon_wan_cres:"Menguante",
       moon_label:"Fase lunar de hoy:", unit_h:"h",
@@ -620,14 +611,11 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
       status_cloud:"Sincronizado en la nube · conectado como"
     },
     fr:{
-      tagline:"Accompagnement du sommeil de l'enfant, sans pleurs",
+      tagline:"Accompagnement du sommeil de l'enfant",
       tab_home:"Accueil", tab_journal:"Journal de sommeil", tab_feeding:"Tétées et couches", tab_signals:"Signes de sommeil",
       tab_nutrition:"Nutrition et sommeil", tab_questions:"Questions", tab_family:"Famille",
       greeting:"Bonjour", greeting_generic:"famille",
       stat_lastnight:"Dernière nuit", stat_napstoday:"Siestes aujourd'hui", stat_feedstoday:"Tétées aujourd'hui", stat_questions:"Questions envoyées",
-      bio_title:"À propos de Luisa",
-      bio_text:"Je suis Luisa Suarez, pédagogue du sommeil certifiée par l'Institut SOMNA. J'accompagne les familles de 0 à 12 ans avec la somnopédagogie™, une méthode qui envisage le sommeil sous huit angles : neurosciences, attachement, nutrition, régulation émotionnelle, environnement, rythmes biologiques, dynamique familiale et médecine intégrative. Sans méthode du laisser-pleurer.",
-      bio_credentials:"Certifiée par l'Institut SOMNA · Reconnue par 13 associations professionnelles dans 13 pays",
       qlink_journal:"Chronomètre et journal de sommeil", qlink_feeding:"Tétées et couches du jour",
       qlink_signals:"Signes selon l'âge", qlink_nutrition:"Conseils d'alimentation pro-sommeil", qlink_questions:"Écrivez vos questions à Luisa",
       journal_intro:"Démarrez le chronomètre quand votre enfant s'endort, ou saisissez le journal à la main. Vous verrez les tendances et pourrez les partager avec Luisa.",
@@ -652,6 +640,7 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
       feed_empty:"Aucune tétée enregistrée pour l'instant.", diaper_empty:"Aucune couche enregistrée pour l'instant.",
       signals_intro:"Reconnaître les signes de sommeil à temps évite le surmenage, qui complique l'endormissement. Choisissez l'âge pour voir les signes typiques de cette étape.",
       nutrition_intro:"L'alimentation influence le sommeil : horaires, types d'aliments et hydratation peuvent favoriser ou compliquer le repos.",
+      recipes_title:"Recettes pro-sommeil selon l'âge",
       nutrition_disclaimer:"Ces conseils sont généraux et éducatifs ; ils ne remplacent pas une consultation avec votre pédiatre ou nutritionniste.",
       questions_intro:"Une question ? Écrivez-la ici. Vous pouvez l'envoyer directement par WhatsApp ou email, et elle reste dans votre historique.",
       q_label:"Votre question", q_placeholder:"Écrivez votre question...",
@@ -663,7 +652,6 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
       profile_title:"Votre nom", profile_parent:"Votre nom", profile_save:"Enregistrer", profile_birth:"Date de naissance",
       auth_family_code_label:"Code de votre famille", auth_copy_code:"Copier",
       invite_note:"Partagez ce code avec votre partenaire ou la nounou : en créant leur compte avec \"Unirme con código\", ils verront le même journal.",
-      footer_credentials:"Certifiée par l'Institut SOMNA · Reconnue par 13 associations professionnelles dans 13 pays",
       moon_new:"Nouvelle lune", moon_wax_cres:"Croissante", moon_first:"Premier quartier", moon_wax_gib:"Gibbeuse croissante",
       moon_full:"Pleine lune", moon_wan_gib:"Gibbeuse décroissante", moon_last:"Dernier quartier", moon_wan_cres:"Décroissante",
       moon_label:"Phase lunaire du jour :", unit_h:"h",
@@ -676,14 +664,11 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
       status_cloud:"Synchronisé dans le cloud · connecté en tant que"
     },
     en:{
-      tagline:"Gentle child sleep guidance, without tears",
+      tagline:"Gentle child sleep guidance",
       tab_home:"Home", tab_journal:"Sleep Journal", tab_feeding:"Feeds & Diapers", tab_signals:"Sleep Signals",
       tab_nutrition:"Nutrition & Sleep", tab_questions:"Ask Luisa", tab_family:"Family",
       greeting:"Hello", greeting_generic:"there",
       stat_lastnight:"Last night", stat_napstoday:"Naps today", stat_feedstoday:"Feeds today", stat_questions:"Questions sent",
-      bio_title:"About Luisa",
-      bio_text:"I'm Luisa Suarez, a certified sleep pedagogue (Institut SOMNA). I support families with children aged 0 to 12 using somnopedagogy™, an approach that looks at sleep through eight lenses: neuroscience, attachment, nutrition, emotional regulation, environment, biological rhythms, family dynamics, and integrative medicine. No cry-it-out methods.",
-      bio_credentials:"Certified by Institut SOMNA · Recognized by 13 professional associations in 13 countries",
       qlink_journal:"Timer and sleep log", qlink_feeding:"Today's feeds and diapers",
       qlink_signals:"Signals by age", qlink_nutrition:"Nutrition tips for better sleep", qlink_questions:"Write your questions to Luisa",
       journal_intro:"Start the timer when your child falls asleep, or log it by hand. See the patterns and share them easily with Luisa.",
@@ -708,6 +693,7 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
       feed_empty:"No feeds logged yet.", diaper_empty:"No diapers logged yet.",
       signals_intro:"Catching sleep signals early prevents the overtiredness that makes falling asleep harder. Pick an age to see the typical signals for that stage.",
       nutrition_intro:"Nutrition affects sleep: timing, food choices, and hydration can help or hinder rest.",
+      recipes_title:"Sleep-friendly recipes by age",
       nutrition_disclaimer:"These tips are general and educational — they don't replace a visit to your pediatrician or nutritionist.",
       questions_intro:"Have a question? Write it here. You can send it directly via WhatsApp or email, and it stays in your history.",
       q_label:"Your question", q_placeholder:"Write your question...",
@@ -719,7 +705,6 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
       profile_title:"Your name", profile_parent:"Your name", profile_save:"Save", profile_birth:"Date of birth",
       auth_family_code_label:"Your family code", auth_copy_code:"Copy",
       invite_note:"Share this code with your partner or babysitter: when they create their account with \"Join with code\", they'll see the same log.",
-      footer_credentials:"Certified by Institut SOMNA · Recognized by 13 professional associations in 13 countries",
       moon_new:"New moon", moon_wax_cres:"Waxing crescent", moon_first:"First quarter", moon_wax_gib:"Waxing gibbous",
       moon_full:"Full moon", moon_wan_gib:"Waning gibbous", moon_last:"Last quarter", moon_wan_cres:"Waning crescent",
       moon_label:"Today's moon phase:", unit_h:"h",
@@ -766,6 +751,32 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
          b2:["A light snack ~1 hour before bed (a carb + a protein)","Avoid sugar or juice right before bedtime","Offer water through the day so they're hydrated by night"],
          b3:["Dinner at least 1–2 hours before bed — not too heavy, not on an empty stomach","Watch sugar and caffeine-containing drinks (chocolate, some teas) in the afternoon","A calm dinner routine helps wind down before sleep"],
          b4:["Avoid caffeine-containing drinks (cola, tea, too much chocolate) after mid-afternoon","A light snack if hungry before bed, avoiding simple sugars","Discourage screens during dinner for a calmer meal"] }
+  };
+  var RECIPES = {
+    es:{ b1:["<b>Puré de avena y plátano</b> — avena bien cocida con leche materna, fórmula o agua, con plátano bien pisado. Hidratos complejos y dulzor natural, sin azúcar añadida ni miel (no dar miel antes del año). Ideal ~1 hora antes de la noche.",
+             "<b>Puré de calabaza y garbanzo bien cocido</b> — calabaza y garbanzos bien triturados con un hilo de aceite de oliva. Suave, fácil de digerir y rico en magnesio."],
+         b2:["<b>Yogur con plátano y avena</b> — yogur natural, plátano pisado y una cucharada de avena. Snack liviano de proteína + hidrato, sin azúcar añadida, ~1 hora antes de dormir.",
+             "<b>Puré de batata con canela</b> — batata al horno o hervida, aplastada, con una pizca de canela. Cálido y reconfortante como parte de la rutina de la cena."],
+         b3:["<b>Tostada integral con hummus y pepino</b> — pan integral, hummus casero y láminas de pepino. Cena liviana, sin frituras ni exceso de grasa cerca de acostarse.",
+             "<b>Leche tibia con plátano y una pizca de nuez moscada</b> — licuar leche tibia con medio plátano; ritual cálido antes del cuento de buenas noches."],
+         b4:["<b>Wrap de pavo y hummus</b> — pavo, hummus y vegetales en un wrap integral. Cena liviana 1–2 horas antes de acostarse, con proteína y buenos hidratos.",
+             "<b>Yogur griego con kiwi y semillas de calabaza</b> — kiwi picado, un puñado de semillas de calabaza sobre yogur griego natural. Snack nocturno rico en magnesio."] },
+    fr:{ b1:["<b>Purée d'avoine et banane</b> — avoine bien cuite avec lait maternel, préparation ou eau, banane bien écrasée. Glucides complexes et douceur naturelle, sans sucre ajouté ni miel (pas de miel avant 1 an). Idéal ~1 heure avant la nuit.",
+             "<b>Purée de courge et pois chiches bien cuits</b> — courge et pois chiches bien écrasés avec un filet d'huile d'olive. Doux, facile à digérer et riche en magnésium."],
+         b2:["<b>Yogourt avec banane et avoine</b> — yogourt nature, banane écrasée et une cuillère d'avoine. Collation légère protéine + glucide, sans sucre ajouté, ~1 heure avant le coucher.",
+             "<b>Purée de patate douce à la cannelle</b> — patate douce cuite et écrasée, avec une pincée de cannelle. Chaud et réconfortant dans la routine du souper."],
+         b3:["<b>Tartine de pain complet, houmous et concombre</b> — pain complet, houmous maison et tranches de concombre. Souper léger, sans friture ni excès de gras près du coucher.",
+             "<b>Lait tiède, banane et une pincée de muscade</b> — mixer du lait tiède avec une demi-banane ; un rituel chaud avant l'histoire du soir."],
+         b4:["<b>Wrap dinde et houmous</b> — dinde, houmous et légumes dans une tortilla complète. Souper léger 1 à 2 heures avant le coucher, avec protéines et bons glucides.",
+             "<b>Yogourt grec, kiwi et graines de citrouille</b> — kiwi coupé et une poignée de graines de citrouille sur du yogourt grec nature. Collation du soir riche en magnésium."] },
+    en:{ b1:["<b>Oat and banana purée</b> — well-cooked oats with breast milk, formula, or water, mashed with banana. Complex carbs and natural sweetness, no added sugar or honey (no honey before 12 months). Best ~1 hour before bedtime.",
+             "<b>Pumpkin and soft chickpea purée</b> — pumpkin and well-mashed chickpeas with a drizzle of olive oil. Gentle, easy to digest, and rich in magnesium."],
+         b2:["<b>Yogurt with banana and oats</b> — plain yogurt, mashed banana, and a spoonful of oats. A light protein + carb snack, no added sugar, ~1 hour before bed.",
+             "<b>Cinnamon sweet potato mash</b> — baked or boiled sweet potato, mashed, with a pinch of cinnamon. Warm and comforting as part of the dinner routine."],
+         b3:["<b>Whole-grain toast with hummus and cucumber</b> — whole-grain bread, homemade hummus, and cucumber slices. A light dinner, no fried food or heavy fat close to bedtime.",
+             "<b>Warm milk, banana, and a pinch of nutmeg</b> — blend warm milk with half a banana; a cozy ritual before the bedtime story."],
+         b4:["<b>Turkey and hummus wrap</b> — turkey, hummus, and vegetables in a whole-wheat wrap. A light dinner 1–2 hours before bed, with protein and good carbs.",
+             "<b>Greek yogurt with kiwi and pumpkin seeds</b> — chopped kiwi and a handful of pumpkin seeds over plain Greek yogurt. A magnesium-rich evening snack."] }
   };
 
   var FEED_TYPES = [
@@ -1155,7 +1166,11 @@ var getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, deleteDoc, collection,
   function tipIconSignals(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="7.5"/><path d="M12 8v4l3 2"/></svg>'; }
   function tipIconNutrition(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v7M8 3v4a2 2 0 0 0 4 0M16 3c-1.4 0-2.5 1.7-2.5 4s1.1 4 2.5 4v10"/></svg>'; }
   function renderSignals(){ document.getElementById("signalsList").innerHTML = SIGNALS[state.lang][state.signalsAge].map(function(x){ return "<li>"+tipIconSignals()+"<span>"+x+"</span></li>"; }).join(""); }
-  function renderNutrition(){ document.getElementById("nutritionList").innerHTML = NUTRITION[state.lang][state.nutritionAge].map(function(x){ return "<li>"+tipIconNutrition()+"<span>"+x+"</span></li>"; }).join(""); }
+  function renderNutrition(){
+    document.getElementById("nutritionList").innerHTML = NUTRITION[state.lang][state.nutritionAge].map(function(x){ return "<li>"+tipIconNutrition()+"<span>"+x+"</span></li>"; }).join("");
+    var recipes = (RECIPES[state.lang] && RECIPES[state.lang][state.nutritionAge]) || [];
+    document.getElementById("recipesList").innerHTML = recipes.map(function(x){ return "<li>"+tipIconNutrition()+"<span>"+x+"</span></li>"; }).join("");
+  }
 
   /* ---------------- journal ---------------- */
   var today = new Date().toISOString().slice(0,10);
