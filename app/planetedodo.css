@@ -1,0 +1,67 @@
+/* Planète Dodo · capa de estilo "app" (estructura tipo Bambii, identidad propia) */
+:root{ --r-lg:26px; }
+body{ background:var(--parchment-dim); }
+.wrap{ max-width:520px; }
+header.top .inner{ padding:14px 18px 8px; }
+.tagline{ display:none; }
+.moonphase{ padding:0 18px 12px; }
+.status-banner{ font-size:.72rem; padding:6px 18px; background:transparent; color:var(--ink-soft); border:0; }
+main{ padding:18px 0 130px; }
+footer{ margin-bottom:90px; }
+
+.card{ border-radius:var(--r-lg); }
+.pad{ padding:20px; }
+.section-head h2{ font-size:1.7rem; }
+label, .stat-tile .lbl{ text-transform:none; letter-spacing:0; font-size:.8rem; }
+.card h3{ text-transform:none !important; letter-spacing:0 !important; font-size:.98rem !important; color:var(--ink) !important; }
+.journal-grid{ grid-template-columns:1fr; }
+.panel-journal .section-head p{ display:none; }
+.panel-journal .divider-or{ margin-top:0; }
+
+/* Inicio: tarjeta principal con la órbita del día */
+.hero{ position:relative; overflow:hidden; padding:22px 18px 18px; text-align:center; background:linear-gradient(170deg,var(--lavender-soft),var(--card) 70%); }
+.hero::before{ content:""; position:absolute; inset:-30% -20% auto; height:80%; background:radial-gradient(closest-side,var(--moon-glow),transparent); opacity:.55; pointer-events:none; }
+.hero > *{ position:relative; }
+.hero .orbit-wrap{ max-width:300px; }
+.hero .orbit-caption{ font-size:.84rem; margin:6px 8px 16px; }
+.hero .btn{ padding:14px 18px; font-size:.9rem; }
+.hero .timer-buttons{ margin-bottom:0; }
+.hero .timer-live{ margin-top:0; background:var(--card); }
+
+/* Registro rápido */
+.quick-home{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:16px 0; }
+.quick-home button{ border:1px solid var(--line); background:var(--card); border-radius:22px; padding:12px 4px 10px; font-size:.74rem; font-weight:700; color:var(--ink); cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:7px; box-shadow:var(--shadow); }
+.quick-home button:active{ transform:scale(.96); }
+.quick-home button:focus-visible{ outline:2px solid var(--lavender); outline-offset:2px; }
+.quick-home .ic{ width:38px; height:38px; border-radius:50%; display:grid; place-items:center; }
+.quick-home .ic svg{ width:19px; height:19px; }
+.quick-home .t .ic{ background:var(--teal-soft); color:var(--teal); }
+.quick-home .d .ic{ background:var(--terracotta-soft); color:var(--terracotta); }
+
+/* Resumen del día */
+.stat-row{ grid-template-columns:repeat(4,1fr); gap:8px; }
+.stat-tile{ padding:12px 6px; text-align:center; }
+.stat-tile .num{ font-size:1.3rem; }
+.stat-tile .lbl{ font-size:.68rem; line-height:1.25; }
+.card.stat-tile.accent-lavender{ border-left:1px solid var(--line); border-top:3px solid var(--lavender); }
+.card.stat-tile.accent-gold{ border-left:1px solid var(--line); border-top:3px solid var(--moon); }
+.card.stat-tile.accent-teal{ border-left:1px solid var(--line); border-top:3px solid var(--teal); }
+.card.stat-tile.accent-sage{ border-left:1px solid var(--line); border-top:3px solid var(--sage); }
+
+.luisa-card{ display:flex; align-items:center; gap:14px; width:100%; text-align:left; margin-top:6px; padding:16px 18px; border:1px solid var(--line); background:var(--card); border-radius:var(--r-lg); cursor:pointer; box-shadow:var(--shadow); color:var(--ink); font-family:inherit; }
+.luisa-card .av{ width:44px; height:44px; border-radius:50%; flex:none; background:linear-gradient(160deg,var(--moon-glow),var(--moon)); }
+.luisa-card b{ display:block; font-size:.95rem; }
+.luisa-card span{ font-size:.78rem; color:var(--ink-soft); }
+
+/* Barra inferior */
+nav.tabs{ position:fixed; top:auto; bottom:0; left:50%; transform:translateX(-50%); width:min(100%,520px); z-index:20; border:1px solid var(--line); border-bottom:0; border-radius:26px 26px 0 0; background:color-mix(in srgb, var(--card) 88%, transparent); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); padding-bottom:env(safe-area-inset-bottom,0px); }
+nav.tabs .inner{ justify-content:space-between; gap:2px; overflow:visible; padding:8px 10px; }
+nav.tabs button{ flex:1; flex-direction:column; align-items:center; justify-content:center; gap:3px; border:none; background:transparent; padding:7px 2px; border-radius:16px; font-size:.68rem; color:var(--ink-soft); }
+nav.tabs button svg{ width:22px; height:22px; }
+nav.tabs button.active{ background:var(--lavender-soft); color:var(--ink); border:none; }
+nav.tabs button[data-tab="nutrition"], nav.tabs button[data-tab="questions"]{ display:none; }
+
+/* Selector Señales · Nutrición · Luisa */
+.seg{ display:flex; gap:4px; padding:4px; background:var(--parchment-dim); border:1px solid var(--line); border-radius:999px; margin-bottom:18px; }
+.seg button{ flex:1; border:none; background:transparent; color:var(--ink-soft); font-weight:700; font-size:.82rem; padding:9px 6px; border-radius:999px; cursor:pointer; font-family:inherit; }
+.seg button.on{ background:var(--card); color:var(--ink); box-shadow:var(--shadow); }
